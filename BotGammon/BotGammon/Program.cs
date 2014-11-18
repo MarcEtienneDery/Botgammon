@@ -10,7 +10,7 @@ namespace Botgammon
     {
         static void Main(string[] args)
         {
-            // Frank test
+            // Frank test    
         }
     }
 }
