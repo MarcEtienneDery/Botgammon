@@ -7,8 +7,8 @@
     <ProjectGuid>{6F598334-AB4E-4BE4-B46C-89DD62B0CEE9}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Botgammon</RootNamespace>
-    <AssemblyName>Botgammon</AssemblyName>
+    <RootNamespace>BotGammon</RootNamespace>
+    <AssemblyName>BotGammon</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
