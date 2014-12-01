@@ -14,11 +14,21 @@ namespace BotGammon
     {
         static void Main(string[] args)
         {
+			ProcessStartInfo startInfo;
+			String EXPORT_PATH;
 
-            String gnubg = "D:\\Games\\gnubg\\gnubg-cli.exe"; //TODO get from arguments
+			//check if linux
+			int p = (int) Environment.OSVersion.Platform;
+			if ((p == 4) || (p == 6) || (p == 128)) {
+				//is linux
+				startInfo = new ProcessStartInfo("gnubg", "-t");
+				EXPORT_PATH = Directory.GetCurrentDirectory () + "/";
+			} else {
+				//is windows
+				startInfo = new ProcessStartInfo("D:\\Games\\gnubg\\gnubg-cli.exe", "-t");
+				EXPORT_PATH = Directory.GetCurrentDirectory () + "\\";
+			}
 
-            //Start gnubg-cli
-            ProcessStartInfo startInfo = new ProcessStartInfo(gnubg);
             startInfo.RedirectStandardOutput = true;
             startInfo.RedirectStandardError = true;
             startInfo.RedirectStandardInput = true;
@@ -41,7 +51,7 @@ namespace BotGammon
             {
                 // on se prépare à jouer le prochain coup.
                 process.StandardInput.WriteLine("roll"); // on roll les dés.
-                string exportFile = Directory.GetCurrentDirectory() + "\\export" + coupCounter + ".txt";
+				string exportFile = EXPORT_PATH + "export" + coupCounter + ".txt";
                 coupCounter ++;
                 process.StandardInput.WriteLine("export position snowie " + exportFile);
 
@@ -66,7 +76,7 @@ namespace BotGammon
                 // TODO trouver comment une game fini. et changer le bool.
                 gameFinished = true;
             }
-            process.StandardInput.WriteLine("save game " + Directory.GetCurrentDirectory() + "\\tester.sgf");
+			process.StandardInput.WriteLine("save game " + EXPORT_PATH + "tester.sgf");
         }
     }
 }
