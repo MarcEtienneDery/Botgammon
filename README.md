@@ -13,5 +13,6 @@ We use snowie files to communicate with GNUbg
 
 (Project -> BotGammon Properties -> Debug -> Command line arguments)
 
- * Le path vers gnubg-cli.exe. (Windows seulement) Ex: "D:\\Program Files (x86)\\gnubg\\gnubg-cli.exe"
+ * Le path vers gnubg-cli.exe. (Windows seulement) 
+ > Ex: "D:\\Program Files (x86)\\gnubg\\gnubg-cli.exe"
    
