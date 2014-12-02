@@ -37,7 +37,7 @@ namespace BotGammon
 		//
 		// retourne la string qui représente le move pour gnubg.
 		//
-        public string getCmd()
+        public string GetCmd()
         {
             string cmd = "move ";
             if (moveA != null)

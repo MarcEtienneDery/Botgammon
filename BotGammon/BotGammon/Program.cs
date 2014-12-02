@@ -14,8 +14,6 @@ namespace BotGammon
     {
         static void Main(string[] args)
         {
-			//
-			// TODO : il faut pouvoir donner des arguments à l'application comme un path de l'éxécutable gnubg, 
 			// TODO : faire un mode de test ou l'on joue 100 partie et on garde le nombre de victoire.( pour notre présentation)
 			//	le fonctionement désiré serait : BotGammon --path <the path to gnubg-cli.exe> --test 
 			// 
@@ -30,7 +28,8 @@ namespace BotGammon
 				EXPORT_PATH = Directory.GetCurrentDirectory () + "/";
 			} else {
 				//is windows
-				startInfo = new ProcessStartInfo("D:\\Games\\gnubg\\gnubg-cli.exe", "-t");
+				//startInfo = new ProcessStartInfo("D:\\Games\\gnubg\\gnubg-cli.exe", "-t");
+                startInfo = new ProcessStartInfo(args[0], "-t");
 				EXPORT_PATH = Directory.GetCurrentDirectory () + "\\";
 			}
 
@@ -74,9 +73,9 @@ namespace BotGammon
                 sr.Close();
                 File.Delete(exportFile);// remove the old file after being done with it.
 
-                Move nextMove = player.GetNextMove(grille);// we ask for the next move to make.
+                Move nextMove = player.GetNextMove(grille, 0);// we ask for the next move to make.
 
-                process.StandardInput.WriteLine(nextMove.getCmd());
+                process.StandardInput.WriteLine(nextMove.GetCmd());
 
                 // TODO trouver comment une game fini. et changer le bool.
                 gameFinished = true;

@@ -9,7 +9,7 @@ namespace BotGammon
 {
     class Grille
     {
-		// construteur de grille à partir du parsing du fichier snowie.
+		// constructeur de grille à partir du parsing du fichier snowie.
 		public Grille(String snowie)
         {
             string[] parsing = snowie.Split(';');
@@ -28,7 +28,7 @@ namespace BotGammon
 		//
 		// TODO cette fonction retourne la liste de tous les moves possible pour la grille.
 		//
-		public SortedSet<Move> getPossiblesMoves(){
+		public SortedSet<Move> GetPossiblesMoves(){
 			SortedSet<Move> moves = new SortedSet<Move> ();
 			return moves;
 		}
@@ -36,7 +36,7 @@ namespace BotGammon
 		//
 		// TODO cette fonction effectue le move sur la grille.
 		//
-		public void doMove(Move move){
+		public void DoMove(Move move){
 
 		}
 

@@ -19,9 +19,9 @@ namespace BotGammon
         }
 
 		//
-		//TODO: le ExpectMinimax, dom, tu expliquera ta variable action! :)
+		//TODO: le ExpectiMinimax, dom, tu expliquera ta variable action! :)
 		//
-        public Move ExpectMinimax(Grille pos, int profondeur, int action)
+        public Move ExpectiMinimax(Grille pos, int profondeur, int action)
         {
 
 			// TODO pour commencer, on fait une fonction qui retourne un move random
@@ -66,7 +66,10 @@ namespace BotGammon
 		//
 		// TODO faire un fonction qui va calculer un heuristique pour la grille.
 		//
-		private int heuristique(Grille grille){
+		private int Heuristique(Grille grille)
+		{
+
+		    return 0;
 
 		}
 
