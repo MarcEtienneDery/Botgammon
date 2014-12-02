@@ -11,6 +11,8 @@
     <AssemblyName>BotGammon</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <ProductVersion>12.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -44,9 +46,9 @@
     <Compile Include="IPlayer.cs" />
     <Compile Include="Move.cs" />
     <Compile Include="Player.cs" />
-    <Compile Include="Position.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Grille.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

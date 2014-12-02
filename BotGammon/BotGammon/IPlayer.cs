@@ -8,6 +8,6 @@ namespace BotGammon
 {
     interface IPlayer
     {
-        Move GetNextMove(Position pos);
+        Move GetNextMove(Grille pos, int depth);
     }
 }

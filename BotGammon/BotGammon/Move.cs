@@ -34,6 +34,9 @@ namespace BotGammon
             moveD = new Tuple<int, int>(d, newD);
         }
 
+		//
+		// retourne la string qui représente le move pour gnubg.
+		//
         public string getCmd()
         {
             string cmd = "move ";

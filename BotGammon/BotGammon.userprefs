@@ -1,6 +1,14 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="BotGammon/Program.cs">
+    <Files>
+      <File FileName="BotGammon/Move.cs" Line="1" Column="1" />
+      <File FileName="BotGammon/IPlayer.cs" Line="1" Column="1" />
+      <File FileName="BotGammon/Program.cs" Line="42" Column="4" />
+      <File FileName="BotGammon/Player.cs" Line="1" Column="1" />
+      <File FileName="BotGammon/Position.cs" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
