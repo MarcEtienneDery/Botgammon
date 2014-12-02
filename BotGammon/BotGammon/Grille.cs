@@ -9,6 +9,7 @@ namespace BotGammon
 {
     class Grille
     {
+		// construteur de grille à partir du parsing du fichier snowie.
 		public Grille(String snowie)
         {
             string[] parsing = snowie.Split(';');
@@ -39,17 +40,11 @@ namespace BotGammon
 
 		}
 
-		//
-		//TODO cette fonctione va changer la grille afin d'inversé la position des joueurs.
-		//
-		public void switchPlayer(){
-
-		}
-
         public int[] board = new int[24]; // représentation du board
 		public int[] dices = new int[2];  // la valeur des dés joués
 		public int bar;                   // le nombre de pion hors jeu
 		public int oppBar;                // le nombre de pion hors jeu de l'adversaire.
+		public bool player;				  // si on est le premier joueur ( si faux, bar et oppBar sont inversé.)
 
     }
 }

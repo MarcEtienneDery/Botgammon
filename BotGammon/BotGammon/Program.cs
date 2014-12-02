@@ -17,7 +17,8 @@ namespace BotGammon
 			//
 			// TODO : il faut pouvoir donner des arguments à l'application comme un path de l'éxécutable gnubg, 
 			// TODO : faire un mode de test ou l'on joue 100 partie et on garde le nombre de victoire.( pour notre présentation)
-			//
+			//	le fonctionement désiré serait : BotGammon --path <the path to gnubg-cli.exe> --test 
+			// 
 			ProcessStartInfo startInfo;
 			String EXPORT_PATH;
 
