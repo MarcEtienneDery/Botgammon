@@ -8,6 +8,14 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
+/*
+ * Vocabulaire:
+ * Checkers: pion
+ * Points: triangles
+ * Bar: endroit où on met les checkers mangés (dans les moves, c'est le point #25)
+ * ...
+*/
+
 namespace BotGammon
 {
     class Program

@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace BotGammon
 {
-    class Grille
+    internal class Grille
     {
-		// constructeur de grille à partir du parsing du fichier snowie.
-		public Grille(String snowie)
+        // constructeur de grille à partir du parsing du fichier snowie.
+        public Grille(String snowie)
         {
             string[] parsing = snowie.Split(';');
             bar = Convert.ToInt32(parsing[12]);
@@ -23,28 +23,119 @@ namespace BotGammon
             {
                 dices[i] = Convert.ToInt32(parsing[38 + i]);
             }
+            // On a des doubles!
+            isDouble = dices[0] == dices[1];
         }
 
-		//
-		// TODO cette fonction retourne la liste de tous les moves possible pour la grille.
-		//
-		public SortedSet<Move> GetPossiblesMoves(){
-			SortedSet<Move> moves = new SortedSet<Move> ();
-			return moves;
-		}
+        public bool IsBlocked(int point)
+        {
+            return board[point] >= 2;
+        }
 
-		//
-		// TODO cette fonction effectue le move sur la grille.
-		//
-		public void DoMove(Move move){
+        //
+        // TODO cette fonction retourne la liste de tous les moves possible pour la grille.
+        //
+        public SortedSet<Move> GetPossibleMoves()
+        {
+            var moves = new SortedSet<Move>();
+            var movesIntermediaires = new List<Tuple<int, int>>();
+            List<int> dicesLeft = dices;
 
-		}
+            // Si on a un checker de mangé
+            if (bar != 0)
+            {
+                if (isDouble)
+                {
+                    // On ne peut rien jouer
+                    if (IsBlocked(25 - dices[0]))
+                    {
+                        return null;
+                    }
+                    var listeAMettreDansMoves = new List<int>();
+                    // On vide le bar tant qu'il reste des dés
+                    while (bar != 0 || dicesLeft.Count != 0)
+                    {
+                        var singleMove = new Tuple<int, int>(25, 25 - dices[0]);
+                        movesIntermediaires.Add(singleMove);
+                        dicesLeft.RemoveAt(0);
+                        
+                        foreach (var move in movesIntermediaires)
+                        {
+                            listeAMettreDansMoves.Add(move.Item1);
+                            listeAMettreDansMoves.Add(move.Item2);
+                        }
+                    }
+                    // S'il reste des checkers sur le bar ou si on a fini de jouer, on retourne la liste
+                    if (bar != 0 || (bar == 0 && dicesLeft.Count == 0))
+                    {
+                        Move move = null;
+                        // Façon cancéreuse de remplir la liste :(
+                        switch (dicesLeft.Count)
+                        {
+                            case 0:
+                                move = new Move(listeAMettreDansMoves[0], listeAMettreDansMoves[1], listeAMettreDansMoves[2],
+                                    listeAMettreDansMoves[3], listeAMettreDansMoves[4], listeAMettreDansMoves[5],
+                                    listeAMettreDansMoves[6], listeAMettreDansMoves[7]);
+                                break;
+                            case 1:
+                                move = new Move(listeAMettreDansMoves[0], listeAMettreDansMoves[1], listeAMettreDansMoves[2],
+                                    listeAMettreDansMoves[3], listeAMettreDansMoves[4], listeAMettreDansMoves[5]);
+                                break;
+                            case 2:
+                                move = new Move(listeAMettreDansMoves[0], listeAMettreDansMoves[1], listeAMettreDansMoves[2],
+                                    listeAMettreDansMoves[3]);
+                                break;
+                            case 3:
+                                move = new Move(listeAMettreDansMoves[0], listeAMettreDansMoves[1]);
+                                break;
+                        }
+                        moves.Add(move);
+                        return moves;
+                    }
+                    // Il reste 1 dé à jouer
+                    // TODO: Mettre ça plus générique peu importe le nombre de dés restants
+                    else if (dicesLeft.Count == 1)
+                    {
+                        // Pour tous les points du board
+                        foreach (var point in board)
+                        {
+                            var movesIntermediairesTemp = movesIntermediaires;
+                            // Si le point contient au moins un checker
+                            if (board[point] > 0)
+                            {
+                                // Si le move restant est faisable et si ça dépasse pas le board
+                                if ((!IsBlocked(point - dicesLeft[0])) && (point - dicesLeft[0] > 0))
+                                {
+                                    
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    
+                }
+            }
+
+
+            return moves;
+        }
+
+        //
+        // TODO cette fonction effectue le move sur la grille.
+        //
+        public void DoMove(Move move)
+        {
+
+        }
 
         public int[] board = new int[24]; // représentation du board
-		public int[] dices = new int[2];  // la valeur des dés joués
-		public int bar;                   // le nombre de pion hors jeu
-		public int oppBar;                // le nombre de pion hors jeu de l'adversaire.
-		public bool player;				  // si on est le premier joueur ( si faux, bar et oppBar sont inversé.)
+        public List<int> dices = new List<int>(); // la valeur des dés joués
+        public bool isDouble;
+        public int bar; // le nombre de pion hors jeu
+        public int oppBar; // le nombre de pion hors jeu de l'adversaire.
+        public bool player; // si on est le premier joueur ( si faux, bar et oppBar sont inversé.)
 
     }
 }
