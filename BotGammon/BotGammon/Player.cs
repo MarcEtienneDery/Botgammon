@@ -8,72 +8,123 @@ namespace BotGammon
 {
     class Player : IPlayer
     {
-		//
-		//TODO fonction de base du minimax qui va s'occuper de la profondeur itérative.
-		//
-		public Move GetNextMove(Grille pos, int depth)
+        public Player()
         {
-
-
-            return new Move(1,2);
-        }
-
-		//
-		//TODO: le ExpectiMinimax, dom, tu expliquera ta variable action! :)
-		//
-        public Move ExpectiMinimax(Grille pos, int profondeur, int action)
-        {
-
-			// TODO pour commencer, on fait une fonction qui retourne un move random
-			// donc grille.getPossiblesMoves() et on prend un random.
-
-            if (profondeur == 0)
+            for (int i = 1; i <= 6; i++)
             {
-                //Need ajout fonction heuristique
-                return null;
-            }
-
-            if (action == 1)
-            {
-
-                
-            }
-            else if (action == 2)
-            {
-                
-            }
-            else if (action == 3)
-            {
-                for (int i = 1; i < 7; i++)
+                for (int j = i; j <= 6; j++)
                 {
-                    for (int j = i; j < 7; j++)
+                    List<int> dices = new List<int>();
+                    dices.Add(i);
+                    dices.Add(j);
+                    if (i == j)
                     {
-
+                        dices.Add(i);
+                        dices.Add(j);
+                        possibleDiceRoll.Add(new Tuple<double, List<int>>(1/36, dices));
+                    }
+                    else
+                    {
+                        possibleDiceRoll.Add(new Tuple<double, List<int>>(2 / 36, dices));
                     }
                 }
             }
-            return null;
-
         }
 
-        public int[] ProbabilityDice()
+		//
+		//TODO fonction de base du minimax qui va s'occuper de la profondeur itérative.
+		//
+        public Move GetNextMove(Grille grille, int profondeur)
         {
-            var listeDice = new List<Tuple<int, int>>();
+            double valeurOptimal = Double.MinValue;
+		    Move moveOptimal = null;
 
-            return null;
+            SortedSet<Move> possibleMoves = grille.ListPossibleMoves();
+            foreach (var possibleMove in possibleMoves)
+            {
+                Grille moveGrille = new Grille(grille);
+                moveGrille.UpdateGrille(possibleMove);
+                moveGrille.player = !moveGrille.player;
+                double valeurTest = ExpectiMinimax(moveGrille, profondeur - 1, valeurOptimal, Double.MaxValue);
+                if (valeurTest > valeurOptimal)
+                {
+                    valeurOptimal = valeurTest;
+                    moveOptimal = possibleMove;
+                }
+            }
+            return moveOptimal;
+   
+        }
+
+		//
+		//TODO: le ExpectiMinimax
+		//
+        public double ExpectiMinimax(Grille grille, int profondeur, double alpha, double beta)
+        {
+            if (profondeur == 0) // on est au bout.
+            {
+                return Heuristique(grille);
+            }
+
+            if (grille.dice.Count > 0) // un joueur peut jouer.
+            {
+                if (grille.player) // on joue
+                {
+                    SortedSet<Move> possibleMoves = grille.ListPossibleMoves();
+                    foreach (var possibleMove in possibleMoves)
+                    {
+                        Grille moveGrille = new Grille(grille);
+                        moveGrille.UpdateGrille(possibleMove);
+                        moveGrille.player = !moveGrille.player;
+                        alpha = Math.Max(alpha, ExpectiMinimax(moveGrille, profondeur - 1, alpha, beta));
+                        if (beta <= alpha)
+                        {
+                            break;
+                        }
+                    }
+                    return alpha;
+                }
+                else //l'adversaire joue.
+                {
+                    SortedSet<Move> possibleMoves = grille.ListPossibleMoves();
+                    foreach (var possibleMove in possibleMoves)
+                    {
+                        Grille moveGrille = new Grille(grille);
+                        moveGrille.UpdateGrille(possibleMove);
+                        moveGrille.player = !moveGrille.player;
+                        beta = Math.Min(beta, ExpectiMinimax(moveGrille, profondeur - 1, alpha, beta));
+                        if (beta <= alpha)
+                        {
+                            break;
+                        }
+                    }
+                    return beta;
+                }
+            }
+            else // on est dans notre cas random.
+            {
+                double value = 0;
+                foreach (var possDice in possibleDiceRoll)
+                {
+                    Grille diceGrille = new Grille(grille);
+                    diceGrille.dice = possDice.Item2;
+                    value += possDice.Item1 * ExpectiMinimax(diceGrille, profondeur, alpha, beta);
+                }
+                return value;
+            }
         }
 
 		//
 		// TODO faire un fonction qui va calculer un heuristique pour la grille.
 		//
-		private int Heuristique(Grille grille)
+        private double Heuristique(Grille grille)
 		{
 
 		    return 0;
 
 		}
 
-
+        private readonly List<Tuple<double, List<int>>> possibleDiceRoll = new List<Tuple<double, List<int>>>();
 
     }
 }
