@@ -9,7 +9,9 @@ namespace BotGammon
 {
     internal class Grille
     {
+        //
         // constructeur de grille à partir du parsing du fichier snowie.
+        //
         public Grille(String snowie)
         {
             string[] parsing = snowie.Split(';');
@@ -27,152 +29,134 @@ namespace BotGammon
             isDouble = dice[0] == dice[1];
         }
 
-        public bool IsBlocked(int point)
+        //
+        // si on est rendu à la dernière phase de jeu ou l'on doit vider nos pions.
+        //
+        public bool isFinalStage()
         {
-            return board[point] >= 2;
-        }
-
-        // Effectue le move sur la grille et retourne la grille
-        public Grille UpdateGrille(Grille oldGrille, Move move)
-        {
-            Grille newGrille;
-            return newGrille;
-        }
-
-        // Retourne la liste des moves possibles pour un dé
-        public SortedSet<Move> GetPossibleMovesForDie(Grille grille, int die)
-        {
-            var moves = new SortedSet<Move>();
-
-            //    if bar: on doit jouer le bar
-            //    si pas bar, on itere sur toute les points de notre joueurs, et on check si on peut jouer.
-
-            return moves;
+            if (player)
+            {
+                if (bar > 0) // si le bar n'est pas vide
+                {
+                    return false;
+                }
+                for (int i = 5; i < 24; i++) // si on trouve des pion encore en jeu.
+                {
+                    if (board[i] > 0)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
 
         //
-        // TODO cette fonction retourne la liste de tous les moves possible pour la grille.
+        // TODO Effectue le move sur la grille et retourne la grille
         //
-        public SortedSet<Move> GetPossibleMoves(Grille grille, int[] des, List<Move> listeMoves)
+        public void UpdateGrille(Move move)
+        {
+            // enlever le de de la liste des de (trouver ca valeur )
+
+            // effectuer le move.
+        }
+
+        //
+        // transforme le tuple en move et call la function UpdateGrille
+        //
+        public void UpdateGrille(Tuple<int,int> tuple)
+        {
+            var listTuple = new List<Tuple<int, int>>();
+            listTuple.Add(tuple);
+            var move = new Move(listTuple);
+            UpdateGrille(move);
+        }
+
+        //
+        // Cette fonction va retourner la liste de toute les moves possible de cette grille.
+        //
+        public SortedSet<Move> ListPossibleMoves()
+        {
+            listPossibleMoves = new SortedSet<Move>();
+            GetPossibleMoves(this, new List<Tuple<int, int>>());
+            return listPossibleMoves;
+        }
+
+        //
+        //  Cette fonction retourne la liste de tous les moves possible pour la grille.
+        //
+        private void GetPossibleMoves(Grille grille, List<Tuple<int,int>> listeMoves)
         {
             var moves = new SortedSet<Move>();
             bool foundPossibleMove = false;
-            for (int i = 0; i < des.Length; i++)
+            for (int i = 0; i < grille.dice.Count; i++)
             {
-                var possibleMovesForDie = GetPossibleMovesForDie(grille, des[i]);
+                var possibleMovesForDie = GetPossibleMovesForDie(grille, grille.dice[i]);
                 if (possibleMovesForDie.Count != 0)
                 {
                     foundPossibleMove = true;
+                    foreach (var move in possibleMovesForDie)
+                    {
+                        Grille moveGrille = (Grille)grille.MemberwiseClone();
+                        moveGrille.UpdateGrille(move);
+                        List<Tuple<int,int>> moveListe = new List<Tuple<int, int>>(listeMoves);
+                        moveListe.Add(move);
+                        GetPossibleMoves(moveGrille, moveListe);
+                    }
                 }
             }
 
-//            var movesIntermediaires = new List<Tuple<int, int>>();
-//            
-//            // Si on a au moins un checker de mangé
-//            if (bar != 0)
-//            {
-//                List<int> dicesLeft = dice;
-//                if (isDouble)
-//                {
-//                    // On ne peut rien jouer
-//                    if (IsBlocked(25 - dice[0]))
-//                    {
-//                        return null;
-//                    }
-//                    var listeAMettreDansMoves = new List<int>();
-//                    // On vide le bar tant qu'il reste des dés
-//                    while (bar != 0 || dicesLeft.Count != 0)
-//                    {
-//                        var singleMove = new Tuple<int, int>(25, 25 - dice[0]);
-//                        movesIntermediaires.Add(singleMove);
-//                        dicesLeft.RemoveAt(0);
-//                        
-//                        foreach (var move in movesIntermediaires)
-//                        {
-//                            listeAMettreDansMoves.Add(move.Item1);
-//                            listeAMettreDansMoves.Add(move.Item2);
-//                        }
-//                    }
-//                    // S'il reste des checkers sur le bar ou si on a fini de jouer, on retourne la liste
-//                    if (bar != 0 || (bar == 0 && dicesLeft.Count == 0))
-//                    {
-//                        Move move = null;
-//                        // Façon cancéreuse d'envoyer le move :(
-//                        switch (dicesLeft.Count)
-//                        {
-//                            case 0:
-//                                move = new Move(listeAMettreDansMoves[0], listeAMettreDansMoves[1], listeAMettreDansMoves[2],
-//                                    listeAMettreDansMoves[3], listeAMettreDansMoves[4], listeAMettreDansMoves[5],
-//                                    listeAMettreDansMoves[6], listeAMettreDansMoves[7]);
-//                                break;
-//                            case 1:
-//                                move = new Move(listeAMettreDansMoves[0], listeAMettreDansMoves[1], listeAMettreDansMoves[2],
-//                                    listeAMettreDansMoves[3], listeAMettreDansMoves[4], listeAMettreDansMoves[5]);
-//                                break;
-//                            case 2:
-//                                move = new Move(listeAMettreDansMoves[0], listeAMettreDansMoves[1], listeAMettreDansMoves[2],
-//                                    listeAMettreDansMoves[3]);
-//                                break;
-//                            case 3:
-//                                move = new Move(listeAMettreDansMoves[0], listeAMettreDansMoves[1]);
-//                                break;
-//                        }
-//                        moves.Add(move);
-//                        return moves;
-//                    }
-//                    // Il reste 1 dé à jouer
-//                    // TODO: Mettre ça plus générique peu importe le nombre de dés restants
-//                    if (dicesLeft.Count == 1)
-//                    {
-//                        // Pour tous les points du board
-//                        foreach (var point in board)
-//                        {
-//                            var movesIntermediairesTemp = movesIntermediaires;
-//                            // Si le point ne contient pas de checker joueur on skip
-//                            if (board[point] <= 0) continue;
-//                            int newPoint = point - dicesLeft[0];
-//
-//                            // Si le move restant est infaisable ou dépasse le board on skip
-//                            if ((IsBlocked(newPoint)) || (newPoint <= 0)) continue;
-//                            movesIntermediairesTemp.Add(new Tuple<int, int>(point, newPoint));
-//                            listeAMettreDansMoves.Add(point);
-//                            listeAMettreDansMoves.Add(newPoint);
-//
-//                            Move move = new Move(listeAMettreDansMoves[0], listeAMettreDansMoves[1],
-//                                listeAMettreDansMoves[2], listeAMettreDansMoves[3],
-//                                listeAMettreDansMoves[4], listeAMettreDansMoves[5],
-//                                listeAMettreDansMoves[6], listeAMettreDansMoves[7]);
-//                            moves.Add(move);
-//
-//                            listeAMettreDansMoves.RemoveAt(6);
-//                            listeAMettreDansMoves.RemoveAt(7);
-//                        }
-//                    }
-//                    // Il reste 2 ou 3 dés à jouer (va remplacer le if d'en haut
-//                    else
-//                    {
-//                        
-//                    }
-//                }
-//                else
-//                {
-//                    
-//                }
-//            }
+            if (!foundPossibleMove)// on est dans une feuille, on ajoute le move a la liste.
+            {
+                listPossibleMoves.Add(new Move(listeMoves));
+            }
 
+        }
 
-
-
+        //
+        // Retourne la liste des moves possibles pour un dé
+        //
+        private SortedSet<Tuple<int, int>> GetPossibleMovesForDie(Grille grille, int die)
+        {
+            var moves = new SortedSet<Tuple<int, int>>();
+            //si l'on doit vider le bar.
+            if (grille.bar != 0)
+            {
+                if (grille.board[25 - die] >= 0)
+                {
+                    moves.Add(new Tuple<int, int>(25, 25 - die));
+                }
+            }
+            else if (grille.isFinalStage())  // si on est rendu a vider la planche.
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    if (grille.board[i] > 0)
+                    {
+                        if (i - die < 0)
+                        {
+                            moves.Add(new Tuple<int, int>(i + 1, 0));
+                        }
+                        else if (grille.board[i - die] >= -1) 
+                        {
+                            moves.Add(new Tuple<int, int>(i + 1, i + 1 - die));
+                        }
+                    }
+                }
+            }
+            else // on peut jouer n'importequoi
+            {
+                for (int i = 0; i < 24; i++)
+                {
+                    if (grille.board[i] > 0 && i - die >= 0 && grille.board[i - die] >= -1) //on peut jouer sur cette case.
+                    {
+                        moves.Add(new Tuple<int, int>(i + 1, i + 1 - die));
+                    }
+                }
+            }
             return moves;
         }
 
-        //
-        // TODO cette fonction effectue le move sur la grille.
-        //
-        public void DoMove(Move move)
-        {
-
-        }
 
         public int[] board = new int[24]; // représentation du board
         public List<int> dice = new List<int>(); // la valeur des dés joués
@@ -180,6 +164,7 @@ namespace BotGammon
         public int bar; // le nombre de pion hors jeu
         public int oppBar; // le nombre de pion hors jeu de l'adversaire.
         public bool player; // si on est le premier joueur ( si faux, bar et oppBar sont inversé.)
+        private SortedSet<Move> listPossibleMoves;
 
     }
 }
