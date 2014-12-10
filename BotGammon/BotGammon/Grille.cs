@@ -91,7 +91,7 @@ namespace BotGammon
         }
 
         //
-        //Applique une move au board tout dependant si on est le joueur + ou -
+        //Applique une move au board tout dependant si on est le joueur + ou - et enlève le dé utilisé de la liste de dé
         //
         public void applyMoveRemoveDice(Tuple<int, int> tuple)
         {
