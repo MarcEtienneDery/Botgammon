@@ -73,19 +73,19 @@ namespace BotGammon
             //On transfert les checkers sur le board et on supprime le dé de la liste des dés
             if (move.MoveA != null)
             {
-                applyMoveRemoveDice(move.MoveA);
+                ApplyMoveRemoveDice(move.MoveA);
             }
             if (move.MoveB != null)
             {
-                applyMoveRemoveDice(move.MoveB);
+                ApplyMoveRemoveDice(move.MoveB);
             }
             if (move.MoveC != null)
             {
-                applyMoveRemoveDice(move.MoveC);
+                ApplyMoveRemoveDice(move.MoveC);
             }
             if (move.MoveD != null)
             {
-                applyMoveRemoveDice(move.MoveD);
+                ApplyMoveRemoveDice(move.MoveD);
             }  
             
         }
@@ -93,7 +93,7 @@ namespace BotGammon
         //
         //Applique une move au board tout dependant si on est le joueur + ou - et enlève le dé utilisé de la liste de dé
         //
-        public void applyMoveRemoveDice(Tuple<int, int> tuple)
+        public void ApplyMoveRemoveDice(Tuple<int, int> tuple)
         {
             //On enlève le dé de la liste des dés
             dice.Remove(Math.Abs(tuple.Item2 - tuple.Item1));
