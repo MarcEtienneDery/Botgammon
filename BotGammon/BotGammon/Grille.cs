@@ -25,8 +25,10 @@ namespace BotGammon
             {
                 dice[i] = Convert.ToInt32(parsing[38 + i]);
             }
-            // On a des doubles!
-            isDouble = dice[0] == dice[1];
+            if (dice[0] == dice[1]) // on a des double
+            {
+                dice[2] = dice[3] = dice[0];
+            }
         }
 
         //
