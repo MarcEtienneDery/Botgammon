@@ -15,9 +15,9 @@ namespace BotGammon
             if (listeMovesIntermediaires[1] == null)
                 moveB = listeMovesIntermediaires[1];
             if (listeMovesIntermediaires[2] == null)
-                moveA = listeMovesIntermediaires[2];
+                moveC = listeMovesIntermediaires[2];
             if (listeMovesIntermediaires[3] == null)
-                moveB = listeMovesIntermediaires[3];
+                moveD = listeMovesIntermediaires[3];
         }
 
 		//
