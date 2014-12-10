@@ -12,13 +12,15 @@ namespace BotGammon
         {
 
             moveA = listeMovesIntermediaires[0];
-            if (listeMovesIntermediaires[1] == null)
+            if (listeMovesIntermediaires[1] != null)
                 moveB = listeMovesIntermediaires[1];
-            if (listeMovesIntermediaires[2] == null)
+            if (listeMovesIntermediaires[2] != null)
                 moveC = listeMovesIntermediaires[2];
-            if (listeMovesIntermediaires[3] == null)
+            if (listeMovesIntermediaires[3] != null)
                 moveD = listeMovesIntermediaires[3];
         }
+
+
 
 		//
 		// retourne la string qui représente le move pour gnubg.
@@ -43,6 +45,30 @@ namespace BotGammon
                 cmd += moveD.Item1 + "/" + moveD.Item2 + " ";
             }
             return cmd;
+        }
+
+        public Tuple<int, int> MoveA
+        {
+            get { return moveA; }
+            set { moveA = value; }
+        }
+
+        public Tuple<int, int> MoveB
+        {
+            get { return moveB; }
+            set { moveB = value; }
+        }
+
+        public Tuple<int, int> MoveC
+        {
+            get { return moveC; }
+            set { moveC = value; }
+        }
+
+        public Tuple<int, int> MoveD
+        {
+            get { return moveD; }
+            set { moveD = value; }
         }
 
         private Tuple<int, int> moveA;

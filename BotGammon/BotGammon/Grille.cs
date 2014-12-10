@@ -72,7 +72,239 @@ namespace BotGammon
         {
             // enlever le de de la liste des de (trouver ca valeur )
 
-            // effectuer le move.
+            //On transfert les checkers sur le board
+            //On est les + sur le board
+            if (player)
+            {
+                if (move.MoveA != null)
+                {
+                    if (move.MoveA.Item1 == 25)
+                    {
+                        bar--;
+                        if (board[move.MoveA.Item2 - 1] == -1)
+                        {
+                            board[move.MoveA.Item2 - 1] = 1;
+                            oppBar++;
+                        }
+                        else
+                        {
+                            board[move.MoveA.Item2 - 1]++;
+                        }
+
+                    }
+                    else if (board[move.MoveA.Item2 - 1] == -1)
+                    {
+                        board[move.MoveA.Item1 - 1]--;
+                        board[move.MoveA.Item2 - 1] = 1;
+                        oppBar++;
+                    }
+                    else 
+                    {
+                        board[move.MoveA.Item1 - 1]--;
+                        board[move.MoveA.Item2 - 1]++;
+                    }
+                }
+                if (move.MoveB != null)
+                {
+                    if (move.MoveB.Item1 == 25)
+                    {
+                        bar--;
+                        if (board[move.MoveB.Item2 - 1] == -1)
+                        {
+                            board[move.MoveB.Item2 - 1] = 1;
+                            oppBar++;
+                        }
+                        else
+                        {
+                            board[move.MoveB.Item2 - 1]++;
+                        }
+
+                    }
+                    else if (board[move.MoveB.Item2 - 1] == -1)
+                    {
+                        board[move.MoveB.Item1 - 1]--;
+                        board[move.MoveB.Item2 - 1] = 1;
+                        oppBar++;
+                    }
+                    else
+                    {
+                        board[move.MoveB.Item1 - 1]--;
+                        board[move.MoveB.Item2 - 1]++;
+                    }
+                }
+                if (move.MoveC != null)
+                {
+                    if (move.MoveC.Item1 == 25)
+                    {
+                        bar--;
+                        if (board[move.MoveC.Item2 - 1] == -1)
+                        {
+                            board[move.MoveC.Item2 - 1] = 1;
+                            oppBar++;
+                        }
+                        else
+                        {
+                            board[move.MoveC.Item2 - 1]++;
+                        }
+
+                    }
+                    else if (board[move.MoveC.Item2 - 1] == -1)
+                    {
+                        board[move.MoveC.Item1 - 1]--;
+                        board[move.MoveC.Item2 - 1] = 1;
+                        oppBar++;
+                    }
+                    else
+                    {
+                        board[move.MoveC.Item1 - 1]--;
+                        board[move.MoveC.Item2 - 1]++;
+                    }
+                }
+                if (move.MoveD != null)
+                {
+                    if (move.MoveD.Item1 == 25)
+                    {
+                        bar--;
+                        if (board[move.MoveD.Item2 - 1] == -1)
+                        {
+                            board[move.MoveD.Item2 - 1] = 1;
+                            oppBar++;
+                        }
+                        else
+                        {
+                            board[move.MoveD.Item2 - 1]++;
+                        }
+
+                    }
+                    else if (board[move.MoveD.Item2 - 1] == -1)
+                    {
+                        board[move.MoveD.Item1 - 1]--;
+                        board[move.MoveD.Item2 - 1] = 1;
+                        oppBar++;
+                    }
+                    else
+                    {
+                        board[move.MoveD.Item1 - 1]--;
+                        board[move.MoveD.Item2 - 1]++;
+                    }
+                }
+            }
+            else
+            {
+                if (move.MoveA != null)
+                {
+                    if (move.MoveA.Item1 == 0)
+                    {
+                        oppBar--;
+                        if (board[move.MoveA.Item2 - 1] == 1)
+                        {
+                            board[move.MoveA.Item2 - 1] = -1;
+                            bar++;
+                        }
+                        else
+                        {
+                            board[move.MoveA.Item2 - 1]--;
+                        }
+
+                    }
+                    else if (board[move.MoveA.Item2 - 1] == 1)
+                    {
+                        board[move.MoveA.Item1 - 1]++;
+                        board[move.MoveA.Item2 - 1] = -1;
+                        oppBar++;
+                    }
+                    else
+                    {
+                        board[move.MoveA.Item1 - 1]++;
+                        board[move.MoveA.Item2 - 1]--;
+                    }
+                }
+                if (move.MoveB != null)
+                {
+                    if (move.MoveB.Item1 == 0)
+                    {
+                        oppBar--;
+                        if (board[move.MoveB.Item2 - 1] == 1)
+                        {
+                            board[move.MoveB.Item2 - 1] = -1;
+                            bar++;
+                        }
+                        else
+                        {
+                            board[move.MoveB.Item2 - 1]--;
+                        }
+
+                    }
+                    else if (board[move.MoveB.Item2 - 1] == 1)
+                    {
+                        board[move.MoveB.Item1 - 1]++;
+                        board[move.MoveB.Item2 - 1] = -1;
+                        oppBar++;
+                    }
+                    else
+                    {
+                        board[move.MoveB.Item1 - 1]++;
+                        board[move.MoveB.Item2 - 1]--;
+                    }
+                }
+                if (move.MoveC != null)
+                {
+                    if (move.MoveC.Item1 == 0)
+                    {
+                        oppBar--;
+                        if (board[move.MoveC.Item2 - 1] == 1)
+                        {
+                            board[move.MoveC.Item2 - 1] = -1;
+                            bar++;
+                        }
+                        else
+                        {
+                            board[move.MoveC.Item2 - 1]--;
+                        }
+
+                    }
+                    else if (board[move.MoveC.Item2 - 1] == 1)
+                    {
+                        board[move.MoveC.Item1 - 1]++;
+                        board[move.MoveC.Item2 - 1] = -1;
+                        oppBar++;
+                    }
+                    else
+                    {
+                        board[move.MoveC.Item1 - 1]++;
+                        board[move.MoveC.Item2 - 1]--;
+                    }
+                }
+                if (move.MoveD != null)
+                {
+                    if (move.MoveD.Item1 == 0)
+                    {
+                        oppBar--;
+                        if (board[move.MoveD.Item2 - 1] == 1)
+                        {
+                            board[move.MoveD.Item2 - 1] = -1;
+                            bar++;
+                        }
+                        else
+                        {
+                            board[move.MoveD.Item2 - 1]--;
+                        }
+
+                    }
+                    else if (board[move.MoveD.Item2 - 1] == 1)
+                    {
+                        board[move.MoveD.Item1 - 1]++;
+                        board[move.MoveD.Item2 - 1] = -1;
+                        oppBar++;
+                    }
+                    else
+                    {
+                        board[move.MoveD.Item1 - 1]++;
+                        board[move.MoveD.Item2 - 1]--;
+                    }
+                }   
+            }
+            
         }
 
         //
