@@ -39,11 +39,11 @@ namespace BotGammon
         {
             var moves = new SortedSet<Move>();
             var movesIntermediaires = new List<Tuple<int, int>>();
-            List<int> dicesLeft = dices;
-
-            // Si on a un checker de mangé
+            
+            // Si on a au moins un checker de mangé
             if (bar != 0)
             {
+                List<int> dicesLeft = dices;
                 if (isDouble)
                 {
                     // On ne peut rien jouer
@@ -69,7 +69,7 @@ namespace BotGammon
                     if (bar != 0 || (bar == 0 && dicesLeft.Count == 0))
                     {
                         Move move = null;
-                        // Façon cancéreuse de remplir la liste :(
+                        // Façon cancéreuse d'envoyer le move :(
                         switch (dicesLeft.Count)
                         {
                             case 0:
@@ -94,22 +94,36 @@ namespace BotGammon
                     }
                     // Il reste 1 dé à jouer
                     // TODO: Mettre ça plus générique peu importe le nombre de dés restants
-                    else if (dicesLeft.Count == 1)
+                    if (dicesLeft.Count == 1)
                     {
                         // Pour tous les points du board
                         foreach (var point in board)
                         {
                             var movesIntermediairesTemp = movesIntermediaires;
-                            // Si le point contient au moins un checker
-                            if (board[point] > 0)
-                            {
-                                // Si le move restant est faisable et si ça dépasse pas le board
-                                if ((!IsBlocked(point - dicesLeft[0])) && (point - dicesLeft[0] > 0))
-                                {
-                                    
-                                }
-                            }
+                            // Si le point ne contient pas de checker joueur on skip
+                            if (board[point] <= 0) continue;
+                            int newPoint = point - dicesLeft[0];
+
+                            // Si le move restant est infaisable ou dépasse le board on skip
+                            if ((IsBlocked(newPoint)) || (newPoint <= 0)) continue;
+                            movesIntermediairesTemp.Add(new Tuple<int, int>(point, newPoint));
+                            listeAMettreDansMoves.Add(point);
+                            listeAMettreDansMoves.Add(newPoint);
+
+                            Move move = new Move(listeAMettreDansMoves[0], listeAMettreDansMoves[1],
+                                listeAMettreDansMoves[2], listeAMettreDansMoves[3],
+                                listeAMettreDansMoves[4], listeAMettreDansMoves[5],
+                                listeAMettreDansMoves[6], listeAMettreDansMoves[7]);
+                            moves.Add(move);
+
+                            listeAMettreDansMoves.RemoveAt(6);
+                            listeAMettreDansMoves.RemoveAt(7);
                         }
+                    }
+                    // Il reste 2 ou 3 dés à jouer (va remplacer le if d'en haut
+                    else
+                    {
+                        
                     }
                 }
                 else
