@@ -8,30 +8,16 @@ namespace BotGammon
 {
     class Move
     {
-        public Move(int a, int newA)
+        public Move(List<Tuple<int, int>> listeMovesIntermediaires)
         {
-            moveA = new Tuple<int, int>(a, newA);
-        }
 
-        public Move(int a, int newA, int b, int newB)
-        {
-            moveA = new Tuple<int, int>(a, newA);
-            moveB = new Tuple<int, int>(b, newB);
-        }
-
-        public Move(int a, int newA, int b, int newB, int c, int newC)
-        {
-            moveA = new Tuple<int, int>(a, newA);
-            moveB = new Tuple<int, int>(b, newB);
-            moveC = new Tuple<int, int>(c, newC);
-        }
-
-        public Move(int a, int newA, int b, int newB, int c, int newC, int d, int newD)
-        {
-            moveA = new Tuple<int, int>(a, newA);
-            moveB = new Tuple<int, int>(b, newB);
-            moveC = new Tuple<int, int>(c, newC);
-            moveD = new Tuple<int, int>(d, newD);
+            moveA = listeMovesIntermediaires[0];
+            if (listeMovesIntermediaires[1] == null)
+                moveB = listeMovesIntermediaires[1];
+            if (listeMovesIntermediaires[2] == null)
+                moveA = listeMovesIntermediaires[2];
+            if (listeMovesIntermediaires[3] == null)
+                moveB = listeMovesIntermediaires[3];
         }
 
 		//
