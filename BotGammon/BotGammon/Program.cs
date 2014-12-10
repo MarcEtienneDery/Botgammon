@@ -52,6 +52,9 @@ namespace BotGammon
             process.OutputDataReceived += (s, e) => Console.WriteLine(e.Data);
             process.ErrorDataReceived += (s, e) => Console.WriteLine(e.Data);
 
+            process.StandardInput.WriteLine("set matchlength 1");
+            process.StandardInput.WriteLine("set cube use off");
+
             // start a new game
             process.StandardInput.WriteLine("new game");
 
