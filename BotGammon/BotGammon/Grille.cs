@@ -73,271 +73,93 @@ namespace BotGammon
             // enlever le de de la liste des de (trouver ca valeur )
 
             //On transfert les checkers sur le board
-            //On est les + sur le board
+            if (move.MoveA != null)
+            {
+                applyMove(move.MoveA);
+            }
+            if (move.MoveB != null)
+            {
+                applyMove(move.MoveB);
+            }
+            if (move.MoveC != null)
+            {
+                applyMove(move.MoveC);
+            }
+            if (move.MoveD != null)
+            {
+                applyMove(move.MoveD);
+            }  
+            
+        }
+
+        public void applyMove(Tuple<int, int> tuple)
+        {
             if (player)
             {
-                if (move.MoveA != null)
-                {
-                    //Si notre move proviens du bar
-                    if (move.MoveA.Item1 == 25)
-                    {
-                        bar--;
-                        //Si on s'apprette a manger un checker ennemi en sortant du bar
-                        if (board[move.MoveA.Item2 - 1] == -1)
-                        {
-                            board[move.MoveA.Item2 - 1] = 1;
-                            oppBar++;
-                        }
-                        else
-                        {
-                            board[move.MoveA.Item2 - 1]++;
-                        }
 
-                    }
-                    //Si on s'apprette a manger un checker ennemi
-                    else if (board[move.MoveA.Item2 - 1] == -1)
+                //Si notre move proviens du bar
+                if (tuple.Item1 == 25)
+                {
+                    bar--;
+                    //Si on s'apprette a manger un checker ennemi en sortant du bar
+                    if (board[tuple.Item2 - 1] == -1)
                     {
-                        board[move.MoveA.Item1 - 1]--;
-                        board[move.MoveA.Item2 - 1] = 1;
+                        board[tuple.Item2 - 1] = 1;
                         oppBar++;
                     }
-                    //coup normal
-                    else 
-                    {
-                        board[move.MoveA.Item1 - 1]--;
-                        board[move.MoveA.Item2 - 1]++;
-                    }
-                }
-                if (move.MoveB != null)
-                {
-                    //Si notre move proviens du bar
-                    if (move.MoveB.Item1 == 25)
-                    {
-                        bar--;
-                        //Si on s'apprette a manger un checker ennemi en sortant du bar
-                        if (board[move.MoveB.Item2 - 1] == -1)
-                        {
-                            board[move.MoveB.Item2 - 1] = 1;
-                            oppBar++;
-                        }
-                        else
-                        {
-                            board[move.MoveB.Item2 - 1]++;
-                        }
-
-                    }
-                    //Si on s'apprette a manger un checker ennemi
-                    else if (board[move.MoveB.Item2 - 1] == -1)
-                    {
-                        board[move.MoveB.Item1 - 1]--;
-                        board[move.MoveB.Item2 - 1] = 1;
-                        oppBar++;
-                    }
-                    //coup normal
                     else
                     {
-                        board[move.MoveB.Item1 - 1]--;
-                        board[move.MoveB.Item2 - 1]++;
+                        board[tuple.Item2 - 1]++;
                     }
-                }
-                if (move.MoveC != null)
-                {
-                    //Si notre move proviens du bar
-                    if (move.MoveC.Item1 == 25)
-                    {
-                        bar--;
-                        //Si on s'apprette a manger un checker ennemi en sortant du bar
-                        if (board[move.MoveC.Item2 - 1] == -1)
-                        {
-                            board[move.MoveC.Item2 - 1] = 1;
-                            oppBar++;
-                        }
-                        else
-                        {
-                            board[move.MoveC.Item2 - 1]++;
-                        }
 
-                    }
-                    //Si on s'apprette a manger un checker ennemi
-                    else if (board[move.MoveC.Item2 - 1] == -1)
-                    {
-                        board[move.MoveC.Item1 - 1]--;
-                        board[move.MoveC.Item2 - 1] = 1;
-                        oppBar++;
-                    }
-                    //coup normal
-                    else
-                    {
-                        board[move.MoveC.Item1 - 1]--;
-                        board[move.MoveC.Item2 - 1]++;
-                    }
                 }
-                if (move.MoveD != null)
+                //Si on s'apprette a manger un checker ennemi
+                else if (board[tuple.Item2 - 1] == -1)
                 {
-                    //Si notre move proviens du bar
-                    if (move.MoveD.Item1 == 25)
-                    {
-                        bar--;
-                        //Si on s'apprette a manger un checker ennemi en sortant du bar
-                        if (board[move.MoveD.Item2 - 1] == -1)
-                        {
-                            board[move.MoveD.Item2 - 1] = 1;
-                            oppBar++;
-                        }
-                        else
-                        {
-                            board[move.MoveD.Item2 - 1]++;
-                        }
-
-                    }
-                    //Si on s'apprette a manger un checker ennemi
-                    else if (board[move.MoveD.Item2 - 1] == -1)
-                    {
-                        board[move.MoveD.Item1 - 1]--;
-                        board[move.MoveD.Item2 - 1] = 1;
-                        oppBar++;
-                    }
-                    //coup normal
-                    else
-                    {
-                        board[move.MoveD.Item1 - 1]--;
-                        board[move.MoveD.Item2 - 1]++;
-                    }
+                    board[tuple.Item1 - 1]--;
+                    board[tuple.Item2 - 1] = 1;
+                    oppBar++;
                 }
+                //coup normal
+                else
+                {
+                    board[tuple.Item1 - 1]--;
+                    board[tuple.Item2 - 1]++;
+                }
+
             }
-            // On est pas le joueur principal donc on est les - sur le board
             else
-            {        
-                if (move.MoveA != null)
+            {
+                //Si notre move proviens du bar
+                if (tuple.Item1 == 0)
                 {
-                    //Si notre move proviens du bar
-                    if (move.MoveA.Item1 == 0)
+                    oppBar--;
+                    //Si on s'apprette a manger un checker ennemi en sortant du bar
+                    if (board[tuple.Item2 - 1] == 1)
                     {
-                        oppBar--;
-                        //Si on s'apprette a manger un checker ennemi en sortant du bar
-                        if (board[move.MoveA.Item2 - 1] == 1)
-                        {
-                            board[move.MoveA.Item2 - 1] = -1;
-                            bar++;
-                        }
-                        else
-                        {
-                            board[move.MoveA.Item2 - 1]--;
-                        }
-
+                        board[tuple.Item2 - 1] = -1;
+                        bar++;
                     }
-                    //Si on s'apprette a manger un checker ennemi
-                    else if (board[move.MoveA.Item2 - 1] == 1)
-                    {
-                        board[move.MoveA.Item1 - 1]++;
-                        board[move.MoveA.Item2 - 1] = -1;
-                        oppBar++;
-                    }
-                    //coup normal
                     else
                     {
-                        board[move.MoveA.Item1 - 1]++;
-                        board[move.MoveA.Item2 - 1]--;
+                        board[tuple.Item2 - 1]--;
                     }
+
                 }
-                if (move.MoveB != null)
+                //Si on s'apprette a manger un checker ennemi
+                else if (board[tuple.Item2 - 1] == 1)
                 {
-                    //Si notre move proviens du bar
-                    if (move.MoveB.Item1 == 0)
-                    {
-                        oppBar--;
-                        //Si on s'apprette a manger un checker ennemi en sortant du bar
-                        if (board[move.MoveB.Item2 - 1] == 1)
-                        {
-                            board[move.MoveB.Item2 - 1] = -1;
-                            bar++;
-                        }
-                        else
-                        {
-                            board[move.MoveB.Item2 - 1]--;
-                        }
-
-                    }
-                    //Si on s'apprette a manger un checker ennemi
-                    else if (board[move.MoveB.Item2 - 1] == 1)
-                    {
-                        board[move.MoveB.Item1 - 1]++;
-                        board[move.MoveB.Item2 - 1] = -1;
-                        oppBar++;
-                    }
-                    //coup normal
-                    else
-                    {
-                        board[move.MoveB.Item1 - 1]++;
-                        board[move.MoveB.Item2 - 1]--;
-                    }
+                    board[tuple.Item1 - 1]++;
+                    board[tuple.Item2 - 1] = -1;
+                    oppBar++;
                 }
-                if (move.MoveC != null)
+                //coup normal
+                else
                 {
-                    //Si notre move proviens du bar
-                    if (move.MoveC.Item1 == 0)
-                    {
-                        oppBar--;
-                        //Si on s'apprette a manger un checker ennemi en sortant du bar
-                        if (board[move.MoveC.Item2 - 1] == 1)
-                        {
-                            board[move.MoveC.Item2 - 1] = -1;
-                            bar++;
-                        }
-                        else
-                        {
-                            board[move.MoveC.Item2 - 1]--;
-                        }
-
-                    }
-                    //Si on s'apprette a manger un checker ennemi
-                    else if (board[move.MoveC.Item2 - 1] == 1)
-                    {
-                        board[move.MoveC.Item1 - 1]++;
-                        board[move.MoveC.Item2 - 1] = -1;
-                        oppBar++;
-                    }
-                    //coup normal
-                    else
-                    {
-                        board[move.MoveC.Item1 - 1]++;
-                        board[move.MoveC.Item2 - 1]--;
-                    }
+                    board[tuple.Item1 - 1]++;
+                    board[tuple.Item2 - 1]--;
                 }
-                if (move.MoveD != null)
-                {
-                    //Si notre move proviens du bar
-                    if (move.MoveD.Item1 == 0)
-                    {
-                        oppBar--;
-                        //Si on s'apprette a manger un checker ennemi en sortant du bar
-                        if (board[move.MoveD.Item2 - 1] == 1)
-                        {
-                            board[move.MoveD.Item2 - 1] = -1;
-                            bar++;
-                        }
-                        else
-                        {
-                            board[move.MoveD.Item2 - 1]--;
-                        }
-
-                    }
-                    //Si on s'apprette a manger un checker ennemi
-                    else if (board[move.MoveD.Item2 - 1] == 1)
-                    {
-                        board[move.MoveD.Item1 - 1]++;
-                        board[move.MoveD.Item2 - 1] = -1;
-                        oppBar++;
-                    }
-                    //coup normal
-                    else
-                    {
-                        board[move.MoveD.Item1 - 1]++;
-                        board[move.MoveD.Item2 - 1]--;
-                    }
-                }   
             }
-            
         }
 
         //
