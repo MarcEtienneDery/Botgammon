@@ -32,6 +32,18 @@ namespace BotGammon
         }
 
         //
+        // constructeur de grille à partir du parsing du fichier snowie.
+        //
+        public Grille(Grille grille)
+        {
+            grille.board.CopyTo(board,0);
+            dice = new List<int>(grille.dice);
+            bar = grille.bar;
+            oppBar = grille.oppBar;
+            player = grille.player;
+        }
+
+        //
         // si on est rendu à la dernière phase de jeu ou l'on doit vider nos pions.
         //
         public bool isFinalStage()
@@ -99,7 +111,7 @@ namespace BotGammon
                     foundPossibleMove = true;
                     foreach (var move in possibleMovesForDie)
                     {
-                        Grille moveGrille = (Grille)grille.MemberwiseClone();
+                        Grille moveGrille = new Grille(grille);
                         moveGrille.UpdateGrille(move);
                         List<Tuple<int,int>> moveListe = new List<Tuple<int, int>>(listeMoves);
                         moveListe.Add(move);
@@ -162,7 +174,6 @@ namespace BotGammon
 
         public int[] board = new int[24]; // représentation du board
         public List<int> dice = new List<int>(); // la valeur des dés joués
-        public bool isDouble;
         public int bar; // le nombre de pion hors jeu
         public int oppBar; // le nombre de pion hors jeu de l'adversaire.
         public bool player; // si on est le premier joueur ( si faux, bar et oppBar sont inversé.)
