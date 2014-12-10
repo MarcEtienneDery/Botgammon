@@ -69,25 +69,23 @@ namespace BotGammon
         // TODO Effectue le move sur la grille et retourne la grille
         //
         public void UpdateGrille(Move move)
-        {
-            // enlever le de de la liste des de (trouver ca valeur )
-
-            //On transfert les checkers sur le board
+        {          
+            //On transfert les checkers sur le board et on supprime le dé de la liste des dés
             if (move.MoveA != null)
             {
-                applyMove(move.MoveA);
+                applyMoveRemoveDice(move.MoveA);
             }
             if (move.MoveB != null)
             {
-                applyMove(move.MoveB);
+                applyMoveRemoveDice(move.MoveB);
             }
             if (move.MoveC != null)
             {
-                applyMove(move.MoveC);
+                applyMoveRemoveDice(move.MoveC);
             }
             if (move.MoveD != null)
             {
-                applyMove(move.MoveD);
+                applyMoveRemoveDice(move.MoveD);
             }  
             
         }
@@ -95,8 +93,11 @@ namespace BotGammon
         //
         //Applique une move au board tout dependant si on est le joueur + ou -
         //
-        public void applyMove(Tuple<int, int> tuple)
+        public void applyMoveRemoveDice(Tuple<int, int> tuple)
         {
+            //On enlève le dé de la liste des dés
+            dice.Remove(Math.Abs(tuple.Item2 - tuple.Item1));
+
             if (player)
             {
 
