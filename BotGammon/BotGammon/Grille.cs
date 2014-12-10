@@ -92,6 +92,9 @@ namespace BotGammon
             
         }
 
+        //
+        //Applique une move au board tout dependant si on est le joueur + ou -
+        //
         public void applyMove(Tuple<int, int> tuple)
         {
             if (player)
