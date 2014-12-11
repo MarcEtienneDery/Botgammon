@@ -32,7 +32,7 @@ namespace BotGammon
         }
 
 		//
-		//TODO fonction de base du minimax qui va s'occuper de la profondeur itérative.
+		//fonction de base du minimax qui va s'occuper de la profondeur itérative.
 		//
         public Move GetNextMove(Grille grille, int profondeur)
         {
@@ -40,20 +40,33 @@ namespace BotGammon
 		    Move moveOptimal = null;
 
             SortedSet<Move> possibleMoves = grille.ListPossibleMoves();
-            foreach (var possibleMove in possibleMoves)
+            //foreach (var possibleMove in possibleMoves)
+            //{
+            //    Grille moveGrille = new Grille(grille);
+            //    moveGrille.UpdateGrille(possibleMove);
+            //    moveGrille.player = !moveGrille.player;
+            //    double valeurTest = ExpectiMinimax(moveGrille, profondeur - 1, valeurOptimal, Double.MaxValue);
+            //    if (valeurTest > valeurOptimal)
+            //    {
+            //        valeurOptimal = valeurTest;
+            //        moveOptimal = possibleMove;
+            //    }
+            //}
+            //return moveOptimal;
+            Random random = new Random();
+            int num = random.Next(possibleMoves.Count);
+            foreach (var move in possibleMoves)
             {
-                Grille moveGrille = new Grille(grille);
-                moveGrille.UpdateGrille(possibleMove);
-                moveGrille.player = !moveGrille.player;
-                double valeurTest = ExpectiMinimax(moveGrille, profondeur - 1, valeurOptimal, Double.MaxValue);
-                if (valeurTest > valeurOptimal)
+                if (num <= 0)
                 {
-                    valeurOptimal = valeurTest;
-                    moveOptimal = possibleMove;
+                    return move;
+                }
+                else
+                {
+                    num --;
                 }
             }
-            return moveOptimal;
-   
+            return possibleMoves.Max;
         }
 
 		//
