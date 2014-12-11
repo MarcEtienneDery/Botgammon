@@ -9,22 +9,20 @@ namespace BotGammon
 {
     internal class Grille
     {
-        //
-        // constructeur de grille à partir du parsing du fichier snowie.
-        //
-        public Grille(String snowie)
+        //rawboard
+        public Grille(String rawboard)
         {
             player = true;
-            string[] parsing = snowie.Split(';');
-            oppBar = Convert.ToInt32(parsing[12]);
-            bar = Convert.ToInt32(parsing[37]);
+            string[] parsing = rawboard.Split(':');
+            bar = Convert.ToInt32(parsing[31]);
+            oppBar = -Convert.ToInt32(parsing[6]);
             for (int i = 0; i < 24; i++)
             {
-                board[i] = Convert.ToInt32(parsing[13 + i]);
+                board[i] = Convert.ToInt32(parsing[7 + i]);
             }
             for (int i = 0; i < 2; i++)
             {
-                dice.Add(Convert.ToInt32(parsing[38 + i]));
+                dice.Add(Convert.ToInt32(parsing[33 + i]));
             }
             if (dice[0] == dice[1]) // on a des double
             {
@@ -119,6 +117,11 @@ namespace BotGammon
                     }
 
                 }
+                //On vide le board
+                else if (tuple.Item2 <= 0)
+                {
+                    board[tuple.Item1 - 1]--;
+                }
                 //Si on s'apprette a manger un checker ennemi
                 else if (board[tuple.Item2 - 1] == -1)
                 {
@@ -151,6 +154,11 @@ namespace BotGammon
                         board[tuple.Item2 - 1]--;
                     }
 
+                }
+                //On vide le board
+                else if (tuple.Item2 <= 0)
+                {
+                    board[tuple.Item1 - 1]++;
                 }
                 //Si on s'apprette a manger un checker ennemi
                 else if (board[tuple.Item2 - 1] == 1)
@@ -245,7 +253,7 @@ namespace BotGammon
                     {
                         if (i - die < 0)
                         {
-                            moves.Add(new Tuple<int, int>(i + 1, 0));
+                            moves.Add(new Tuple<int, int>(i + 1, i + 1 - die));
                         }
                         else if (grille.board[i - die] >= -1) 
                         {

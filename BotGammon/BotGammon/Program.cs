@@ -22,6 +22,8 @@ namespace BotGammon
     {
         static int CountGame = 0;
         static int CountWin = 0;
+        static String Rawboard = null;
+        static bool Ready = false;
         static void Main(string[] args)
         {
 			// TODO : faire un mode de test ou l'on joue 100 partie et on garde le nombre de victoire.( pour notre présentation)
@@ -51,42 +53,34 @@ namespace BotGammon
             Process process = Process.Start(startInfo);
             process.BeginOutputReadLine();
             process.BeginErrorReadLine();
-            process.OutputDataReceived += (s, e) => Console.WriteLine(e.Data);
+            //process.OutputDataReceived += (s, e) => Console.WriteLine(e.Data);
             process.OutputDataReceived += (s, e) => checkForEndGame(e.Data);
+            process.OutputDataReceived += (s, e) => checkForBoard(e.Data);
+            process.OutputDataReceived += (s, e) => checkForRolledDice(e.Data);
             process.ErrorDataReceived += (s, e) => Console.WriteLine(e.Data);
+            process.ErrorDataReceived += (s, e) => checkForError(e.Data);
 
             process.StandardInput.WriteLine("set matchlength 1");
             process.StandardInput.WriteLine("set cube use off");
+            process.StandardInput.WriteLine("set output rawboard on");
 
             // start a new game
             process.StandardInput.WriteLine("new game");
 
-            int coupCounter = 0;
             IPlayer player = new Player();
-            bool gameFinished = false;
 
             while (CountGame < 100)// boucle pour chaque coup qu'on doit jouer.
             {
                 // on se prépare à jouer le prochain coup.
+                Ready = false;
                 process.StandardInput.WriteLine("roll"); // on roll les dés.
-				string exportFile = EXPORT_PATH + "export" + coupCounter + ".txt";
-                coupCounter ++;
-                process.StandardInput.WriteLine("export position snowie " + exportFile);
 
-                // on load le fichier snowie
-                while (!File.Exists(exportFile)) // truc guetto pour attendre l'export du fichier.
+                while (!Ready)
                 {
                     Thread.Sleep(10);
                 }
-                Thread.Sleep(10);
 
-                StreamReader sr = new StreamReader(exportFile);
-                   
-                String line = sr.ReadToEnd();
-                // TODO parsing du fichier snowie.
-                Grille grille = new Grille(line);
-                sr.Close();
-                File.Delete(exportFile);// remove the old file after being done with it.
+                Grille grille = new Grille(Rawboard);
 
                 Move nextMove = player.GetNextMove(grille, 1);// we ask for the next move to make.
 
@@ -95,6 +89,7 @@ namespace BotGammon
 			process.StandardInput.WriteLine("save game " + EXPORT_PATH + "tester.sgf");
 
             Console.WriteLine("********** finished : " + CountWin + " games won ******************");
+            Console.ReadLine();
         }
 
         static void checkForEndGame(String data)
@@ -102,10 +97,37 @@ namespace BotGammon
             if (data.Contains("wins"))
             {
                 CountGame++;
+                Console.WriteLine(CountGame);
                 if (!data.Contains("gnubg"))
                 {
                     CountWin++;
+                    Console.WriteLine("WIN OMG");
                 }
+            }
+        }
+
+        static void checkForBoard(String data)
+        {
+            if (data.Contains("board:"))
+            {
+                Rawboard = data;
+            }
+        }
+
+        static void checkForRolledDice(String data)
+        {
+            if (data.Contains("You have already rolled the dice"))
+            {
+                Ready = true;
+            }
+        }
+
+        static void checkForError(String data)
+        {
+            if (data.Contains("Illegal"))
+            {
+                Console.WriteLine(Rawboard);
+                Console.ReadLine();
             }
         }
     }

@@ -29,19 +29,51 @@ namespace BotGammon
             string cmd = "move ";
             if (moveA != null)
             {
-                cmd += moveA.Item1 + "/" + moveA.Item2 + " ";
+                cmd += moveA.Item1 + "/";
+                if (moveA.Item2 <= 0) //TODO traiter le cas plus grand
+                {
+                    cmd += "off ";
+                }
+                else
+                {
+                    cmd += moveA.Item2 + " ";
+                }
             }
             if (moveB != null)
             {
-                cmd += moveB.Item1 + "/" + moveB.Item2 + " ";
+                cmd += moveB.Item1 + "/";
+                if (moveB.Item2 <= 0)
+                {
+                    cmd += "off ";
+                }
+                else
+                {
+                    cmd += moveB.Item2 + " ";
+                }
             }
             if (moveC != null)
             {
-                cmd += moveC.Item1 + "/" + moveC.Item2 + " ";
+                cmd += moveC.Item1 + "/";
+                if (moveC.Item2 <= 0)
+                {
+                    cmd += "off ";
+                }
+                else
+                {
+                    cmd += moveC.Item2 + " ";
+                }
             }
             if (moveD != null)
             {
-                cmd += moveD.Item1 + "/" + moveD.Item2 + " ";
+                cmd += moveD.Item1 + "/";
+                if (moveD.Item2 <= 0)
+                {
+                    cmd += "off ";
+                }
+                else
+                {
+                    cmd += moveD.Item2 + " ";
+                }
             }
             return cmd;
         }
