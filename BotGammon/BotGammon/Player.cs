@@ -184,6 +184,11 @@ namespace BotGammon
                     
                     if (grille.board[i] >= 2)
                     {
+                        if (grille.board[i] < 2)
+                        {
+                            nbPairsColles = 0;
+                        }
+
                         bool ennemiEnAvant = grille.EnnemiEnAvantDuPoint(i);
                         nbPairsColles ++;
                         if (ennemiEnAvant)
@@ -193,10 +198,6 @@ namespace BotGammon
                         if (i <= 5)
                         {
                             multiplicateurRecompense += 2;
-                        }
-                        if (grille.board[i] < 2)
-                        {
-                            nbPairsColles = 0;
                         }
                     }
                 }
