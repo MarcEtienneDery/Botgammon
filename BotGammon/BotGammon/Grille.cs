@@ -262,6 +262,26 @@ namespace BotGammon
             return moves;
         }
 
+        // TODO: checker pour l'ennemi aussi (dans l'autre direction?)
+        public bool EnnemiEnAvantDuPoint(int point)
+        {
+            for (int i = 0; i < point; i++)
+            {
+                if (board[i] < 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        // TODO: checker pour l'ennemi aussi
+        public int GetNbPionsJoueurRentres()
+        {
+            int nbPionsJoueur = board.Where(t => t > 0).Sum();
+            return 15 - nbPionsJoueur;
+        }
+
 
         public int[] board = new int[24]; // représentation du board
         public List<int> dice = new List<int>(); // la valeur des dés joués
