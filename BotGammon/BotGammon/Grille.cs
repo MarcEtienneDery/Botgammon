@@ -14,20 +14,22 @@ namespace BotGammon
         //
         public Grille(String snowie)
         {
+            player = true;
             string[] parsing = snowie.Split(';');
-            bar = Convert.ToInt32(parsing[12]);
-            oppBar = Convert.ToInt32(parsing[37]);
+            oppBar = Convert.ToInt32(parsing[12]);
+            bar = Convert.ToInt32(parsing[37]);
             for (int i = 0; i < 24; i++)
             {
                 board[i] = Convert.ToInt32(parsing[13 + i]);
             }
             for (int i = 0; i < 2; i++)
             {
-                dice[i] = Convert.ToInt32(parsing[38 + i]);
+                dice.Add(Convert.ToInt32(parsing[38 + i]));
             }
             if (dice[0] == dice[1]) // on a des double
             {
-                dice[2] = dice[3] = dice[0];
+                dice.Add(dice[0]);
+                dice.Add(dice[0]);
             }
         }
 
@@ -66,26 +68,26 @@ namespace BotGammon
         }
 
         //
-        // TODO Effectue le move sur la grille et retourne la grille
+        // Effectue le move sur la grille et retourne la grille
         //
         public void UpdateGrille(Move move)
         {          
             //On transfert les checkers sur le board et on supprime le dé de la liste des dés
             if (move.MoveA != null)
             {
-                applyMoveRemoveDice(move.MoveA);
+                ApplyMoveRemoveDice(move.MoveA);
             }
             if (move.MoveB != null)
             {
-                applyMoveRemoveDice(move.MoveB);
+                ApplyMoveRemoveDice(move.MoveB);
             }
             if (move.MoveC != null)
             {
-                applyMoveRemoveDice(move.MoveC);
+                ApplyMoveRemoveDice(move.MoveC);
             }
             if (move.MoveD != null)
             {
-                applyMoveRemoveDice(move.MoveD);
+                ApplyMoveRemoveDice(move.MoveD);
             }  
             
         }
@@ -93,7 +95,7 @@ namespace BotGammon
         //
         //Applique une move au board tout dependant si on est le joueur + ou - et enlève le dé utilisé de la liste de dé
         //
-        public void applyMoveRemoveDice(Tuple<int, int> tuple)
+        public void ApplyMoveRemoveDice(Tuple<int, int> tuple)
         {
             //On enlève le dé de la liste des dés
             dice.Remove(Math.Abs(tuple.Item2 - tuple.Item1));
@@ -213,7 +215,10 @@ namespace BotGammon
 
             if (!foundPossibleMove)// on est dans une feuille, on ajoute le move a la liste.
             {
-                listPossibleMoves.Add(new Move(listeMoves));
+                if (listeMoves.Count > 0)
+                {
+                    listPossibleMoves.Add(new Move(listeMoves));
+                }
             }
 
         }
@@ -227,7 +232,7 @@ namespace BotGammon
             //si l'on doit vider le bar.
             if (grille.bar != 0)
             {
-                if (grille.board[25 - die] >= 0)
+                if (grille.board[25 - die - 1] >= -1)
                 {
                     moves.Add(new Tuple<int, int>(25, 25 - die));
                 }

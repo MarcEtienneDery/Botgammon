@@ -6,17 +6,16 @@ using System.Threading.Tasks;
 
 namespace BotGammon
 {
-    class Move
+    class Move : IComparable
     {
         public Move(List<Tuple<int, int>> listeMovesIntermediaires)
         {
-
             moveA = listeMovesIntermediaires[0];
-            if (listeMovesIntermediaires[1] != null)
+            if (listeMovesIntermediaires.Count >= 2)
                 moveB = listeMovesIntermediaires[1];
-            if (listeMovesIntermediaires[2] != null)
+            if (listeMovesIntermediaires.Count >= 3)
                 moveC = listeMovesIntermediaires[2];
-            if (listeMovesIntermediaires[3] != null)
+            if (listeMovesIntermediaires.Count >= 4)
                 moveD = listeMovesIntermediaires[3];
         }
 
@@ -75,5 +74,11 @@ namespace BotGammon
         private Tuple<int, int> moveB;
         private Tuple<int, int> moveC;
         private Tuple<int, int> moveD;
+
+        public int CompareTo(object obj)
+        {
+            // TODO si on veut faire du prunning.
+            return 1;
+        }
     }
 }

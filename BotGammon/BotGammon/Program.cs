@@ -20,6 +20,8 @@ namespace BotGammon
 {
     class Program
     {
+        static int CountGame = 0;
+        static int CountWin = 0;
         static void Main(string[] args)
         {
 			// TODO : faire un mode de test ou l'on joue 100 partie et on garde le nombre de victoire.( pour notre présentation)
@@ -50,6 +52,7 @@ namespace BotGammon
             process.BeginOutputReadLine();
             process.BeginErrorReadLine();
             process.OutputDataReceived += (s, e) => Console.WriteLine(e.Data);
+            process.OutputDataReceived += (s, e) => checkForEndGame(e.Data);
             process.ErrorDataReceived += (s, e) => Console.WriteLine(e.Data);
 
             process.StandardInput.WriteLine("set matchlength 1");
@@ -62,7 +65,7 @@ namespace BotGammon
             IPlayer player = new Player();
             bool gameFinished = false;
 
-            while (!gameFinished)// boucle pour chaque coup qu'on doit jouer.
+            while (CountGame < 100)// boucle pour chaque coup qu'on doit jouer.
             {
                 // on se prépare à jouer le prochain coup.
                 process.StandardInput.WriteLine("roll"); // on roll les dés.
@@ -75,6 +78,7 @@ namespace BotGammon
                 {
                     Thread.Sleep(10);
                 }
+                Thread.Sleep(10);
 
                 StreamReader sr = new StreamReader(exportFile);
                    
@@ -84,14 +88,25 @@ namespace BotGammon
                 sr.Close();
                 File.Delete(exportFile);// remove the old file after being done with it.
 
-                Move nextMove = player.GetNextMove(grille, 0);// we ask for the next move to make.
+                Move nextMove = player.GetNextMove(grille, 1);// we ask for the next move to make.
 
                 process.StandardInput.WriteLine(nextMove.GetCmd());
-
-                // TODO trouver comment une game fini. et changer le bool.
-                gameFinished = true;
             }
 			process.StandardInput.WriteLine("save game " + EXPORT_PATH + "tester.sgf");
+
+            Console.WriteLine("********** finished : " + CountWin + " games won ******************");
+        }
+
+        static void checkForEndGame(String data)
+        {
+            if (data.Contains("wins"))
+            {
+                CountGame++;
+                if (!data.Contains("gnubg"))
+                {
+                    CountWin++;
+                }
+            }
         }
     }
 }
