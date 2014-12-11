@@ -295,6 +295,16 @@ namespace BotGammon
             return 15 - nbPionsJoueur;
         }
 
+        public Grille ReverseBoard(Grille grille)
+        {
+            Grille newGrille = new Grille(grille);
+            newGrille.board = grille.board;
+            Array.Reverse(newGrille.board);
+            newGrille.bar = grille.oppBar;
+            newGrille.oppBar = grille.bar;
+            return newGrille;
+        }
+
 
         public int[] board = new int[24]; // représentation du board
         public List<int> dice = new List<int>(); // la valeur des dés joués

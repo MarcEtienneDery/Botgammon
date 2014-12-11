@@ -162,6 +162,7 @@ namespace BotGammon
             {
                 int nbPairsColles = 0;
                 double multiplicateurRecompense = 0;
+                //TODO: checker nombre de groupes de pairs
                 for (int i = 0; i < grille.board.Length; i++)
                 {
                     // On pénalise tous les checkers non protégés
@@ -181,10 +182,9 @@ namespace BotGammon
                     }
 
                     // On récompense les pairs (bloquent le point)
-                    
                     if (grille.board[i] >= 2)
                     {
-                        if (grille.board[i] < 2)
+                        if (i>=1 && grille.board[i-1] < 2)
                         {
                             nbPairsColles = 0;
                         }
