@@ -231,6 +231,8 @@ namespace BotGammon
             }
 
             // Plus on peut manger de checkers, mieux c'est
+            // TODO: Vérifier si la façon de gérer l'opponent est correcte...
+            // TODO: Pondérer en fonction de la position du checker mangé
             if (grille.player)
             {
                 valeurHeuristique += 1000 * grille.oppBar;
