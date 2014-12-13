@@ -41,33 +41,33 @@ namespace BotGammon
 		    Move moveOptimal = null;
 
             SortedSet<Move> possibleMoves = grille.ListPossibleMoves();
-            //foreach (var possibleMove in possibleMoves)
-            //{
-            //    Grille moveGrille = new Grille(grille);
-            //    moveGrille.UpdateGrille(possibleMove);
-            //    moveGrille.player = !moveGrille.player;
-            //    double valeurTest = ExpectiMinimax(moveGrille, profondeur - 1, valeurOptimal, Double.MaxValue);
-            //    if (valeurTest > valeurOptimal)
-            //    {
-            //        valeurOptimal = valeurTest;
-            //        moveOptimal = possibleMove;
-            //    }
-            //}
-            //return moveOptimal;
-            Random random = new Random();
-            int num = random.Next(possibleMoves.Count);
-            foreach (var move in possibleMoves)
+            foreach (var possibleMove in possibleMoves)
             {
-                if (num <= 0)
+                Grille moveGrille = new Grille(grille);
+                moveGrille.UpdateGrille(possibleMove);
+                moveGrille.ReverseBoard();
+                double valeurTest = ExpectiMinimax(moveGrille, profondeur - 1, valeurOptimal, Double.MaxValue);
+                if (valeurTest > valeurOptimal)
                 {
-                    return move;
-                }
-                else
-                {
-                    num --;
+                    valeurOptimal = valeurTest;
+                    moveOptimal = possibleMove;
                 }
             }
-            return possibleMoves.Max;
+            return moveOptimal;
+            //Random random = new Random();
+            //int num = random.Next(possibleMoves.Count);
+            //foreach (var move in possibleMoves)
+            //{
+            //    if (num <= 0)
+            //    {
+            //        return move;
+            //    }
+            //    else
+            //    {
+            //        num --;
+            //    }
+            //}
+            //return possibleMoves.Max;
         }
 
 		//
@@ -89,7 +89,7 @@ namespace BotGammon
                     {
                         Grille moveGrille = new Grille(grille);
                         moveGrille.UpdateGrille(possibleMove);
-                        moveGrille.player = !moveGrille.player;
+                        moveGrille.ReverseBoard();
                         alpha = Math.Max(alpha, ExpectiMinimax(moveGrille, profondeur - 1, alpha, beta));
                         if (beta <= alpha)
                         {
@@ -105,7 +105,7 @@ namespace BotGammon
                     {
                         Grille moveGrille = new Grille(grille);
                         moveGrille.UpdateGrille(possibleMove);
-                        moveGrille.player = !moveGrille.player;
+                        moveGrille.ReverseBoard();
                         beta = Math.Min(beta, ExpectiMinimax(moveGrille, profondeur - 1, alpha, beta));
                         if (beta <= alpha)
                         {
@@ -133,121 +133,122 @@ namespace BotGammon
 		//
         private static double Heuristique(Grille grille)
         {
-            double valeurHeuristique = 0;
+            //double valeurHeuristique = 0;
 
-            // Aucune menace: http://i.imgur.com/ktuiqfY.jpg
-            // Menace ennemie: http://i.imgur.com/oBM4sIj.jpg
-            bool menaceEnnemie = false;
-            // TODO: à vérifier pour l'ennemi (dans l'autre direction?)
-            for (int i = 0; i < grille.board.Length; i++)
-            {
-                int nbPionsJoueur = 0;
-                if (grille.board[i] < 0)
-                {
-                    menaceEnnemie = true;
-                    break;
-                }
-                if (grille.board[i] > 0)
-                {
-                    nbPionsJoueur += grille.board[i];
-                    if (nbPionsJoueur == 15)
-                    {
-                        break;
-                    }
-                }
-            }
+            //// Aucune menace: http://i.imgur.com/ktuiqfY.jpg
+            //// Menace ennemie: http://i.imgur.com/oBM4sIj.jpg
+            //bool menaceEnnemie = false;
+            //// TODO: à vérifier pour l'ennemi (dans l'autre direction?)
+            //for (int i = 0; i < grille.board.Length; i++)
+            //{
+            //    int nbPionsJoueur = 0;
+            //    if (grille.board[i] < 0)
+            //    {
+            //        menaceEnnemie = true;
+            //        break;
+            //    }
+            //    if (grille.board[i] > 0)
+            //    {
+            //        nbPionsJoueur += grille.board[i];
+            //        if (nbPionsJoueur == 15)
+            //        {
+            //            break;
+            //        }
+            //    }
+            //}
 
-            // S'il n'y a aucune menace ennemie, c'est free-for-all
-            if (menaceEnnemie)
-            {
-                int nbPairsColles = 0;
-                double multiplicateurRecompense = 0;
-                //TODO: checker nombre de groupes de pairs
-                for (int i = 0; i < grille.board.Length; i++)
-                {
-                    // On pénalise tous les checkers non protégés
-                    if (grille.board[i] == 1)
-                    {
-                        bool ennemiEnAvant = grille.EnnemiEnAvantDuPoint(i);
+            //// S'il n'y a aucune menace ennemie, c'est free-for-all
+            //if (menaceEnnemie)
+            //{
+            //    int nbPairsColles = 0;
+            //    double multiplicateurRecompense = 0;
+            //    //TODO: checker nombre de groupes de pairs
+            //    for (int i = 0; i < grille.board.Length; i++)
+            //    {
+            //        // On pénalise tous les checkers non protégés
+            //        if (grille.board[i] == 1)
+            //        {
+            //            bool ennemiEnAvant = grille.EnnemiEnAvantDuPoint(i);
                         
-                        if (ennemiEnAvant)
-                        {
-                            valeurHeuristique -= 150*(-i);
-                        }
-                        // Moins grave s'il y a aucun checker ennemi en avant, mais quand même risqué
-                        else
-                        {
-                            valeurHeuristique -= 15*(-i);
-                        }
-                    }
+            //            if (ennemiEnAvant)
+            //            {
+            //                valeurHeuristique -= 150*(-i);
+            //            }
+            //            // Moins grave s'il y a aucun checker ennemi en avant, mais quand même risqué
+            //            else
+            //            {
+            //                valeurHeuristique -= 15*(-i);
+            //            }
+            //        }
 
-                    // On récompense les pairs (bloquent le point)
-                    if (grille.board[i] >= 2)
-                    {
-                        if (i>=1 && grille.board[i-1] < 2)
-                        {
-                            nbPairsColles = 0;
-                        }
+            //        // On récompense les pairs (bloquent le point)
+            //        if (grille.board[i] >= 2)
+            //        {
+            //            if (i>=1 && grille.board[i-1] < 2)
+            //            {
+            //                nbPairsColles = 0;
+            //            }
 
-                        bool ennemiEnAvant = grille.EnnemiEnAvantDuPoint(i);
-                        nbPairsColles ++;
-                        if (ennemiEnAvant)
-                        {
-                            multiplicateurRecompense += 2;
-                        }
-                        if (i <= 5)
-                        {
-                            multiplicateurRecompense += 2;
-                        }
-                    }
-                }
-                switch (nbPairsColles)
-                {
-                    case 0:
-                        break;
-                    case 1:
-                        valeurHeuristique += (5 * multiplicateurRecompense);
-                        break;
-                    case 2:
-                        valeurHeuristique += (15 * multiplicateurRecompense);
-                        break;
-                    case 3:
-                        valeurHeuristique += (40 * multiplicateurRecompense);
-                        break;
-                    case 4:
-                        valeurHeuristique += (70 * multiplicateurRecompense);
-                        break;
-                    case 5:
-                        valeurHeuristique += (110 * multiplicateurRecompense);
-                        break;
-                    case 6:
-                        valeurHeuristique += (200 * multiplicateurRecompense);
-                        break;
-                    default:
-                        valeurHeuristique += (200 * multiplicateurRecompense);
-                        break;
-                }
+            //            bool ennemiEnAvant = grille.EnnemiEnAvantDuPoint(i);
+            //            nbPairsColles ++;
+            //            if (ennemiEnAvant)
+            //            {
+            //                multiplicateurRecompense += 2;
+            //            }
+            //            if (i <= 5)
+            //            {
+            //                multiplicateurRecompense += 2;
+            //            }
+            //        }
+            //    }
+            //    switch (nbPairsColles)
+            //    {
+            //        case 0:
+            //            break;
+            //        case 1:
+            //            valeurHeuristique += (5 * multiplicateurRecompense);
+            //            break;
+            //        case 2:
+            //            valeurHeuristique += (15 * multiplicateurRecompense);
+            //            break;
+            //        case 3:
+            //            valeurHeuristique += (40 * multiplicateurRecompense);
+            //            break;
+            //        case 4:
+            //            valeurHeuristique += (70 * multiplicateurRecompense);
+            //            break;
+            //        case 5:
+            //            valeurHeuristique += (110 * multiplicateurRecompense);
+            //            break;
+            //        case 6:
+            //            valeurHeuristique += (200 * multiplicateurRecompense);
+            //            break;
+            //        default:
+            //            valeurHeuristique += (200 * multiplicateurRecompense);
+            //            break;
+            //    }
 
-            }
+            //}
 
-            // Plus on peut manger de checkers, mieux c'est
-            // TODO: Vérifier si la façon de gérer l'opponent est correcte...
-            // TODO: Pondérer en fonction de la position du checker mangé
-            if (grille.player)
-            {
-                valeurHeuristique += 1000 * grille.oppBar;
-            }
-            else
-            {
-                valeurHeuristique += 1000 * grille.bar;
-            }
+            //// Plus on peut manger de checkers, mieux c'est
+            //// TODO: Vérifier si la façon de gérer l'opponent est correcte...
+            //// TODO: Pondérer en fonction de la position du checker mangé
+            //if (grille.player)
+            //{
+            //    valeurHeuristique += 1000 * grille.oppBar;
+            //}
+            //else
+            //{
+            //    valeurHeuristique += 1000 * grille.bar;
+            //}
 
-            // Plus on peut bear-off (rentrer) de checkers, mieux c'est
-            valeurHeuristique += grille.GetNbPionsJoueurRentres() * 10000;
+            //// Plus on peut bear-off (rentrer) de checkers, mieux c'est
+            //valeurHeuristique += grille.GetNbPionsJoueurRentres() * 10000;
 
-            // TODO: Faire le check pour savoir lequel on veut retourner!
-            return valeurHeuristique;
-            return -valeurHeuristique;
+            //// TODO: Faire le check pour savoir lequel on veut retourner!
+            //return valeurHeuristique;
+            //return -valeurHeuristique;
+            return 0;
         }
 
         private readonly List<Tuple<double, List<int>>> possibleDiceRoll = new List<Tuple<double, List<int>>>();

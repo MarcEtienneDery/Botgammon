@@ -192,9 +192,20 @@ namespace BotGammon
         //
         public SortedSet<Move> ListPossibleMoves()
         {
+            maxStep = 0;
             listPossibleMoves = new SortedSet<Move>();
             GetPossibleMoves(this, new List<Tuple<int, int>>());
+            listPossibleMoves.RemoveWhere(move => underStep(move)); // TODO FIXER CA OSTI DE CRISS DE MARDE!!!
             return listPossibleMoves;
+        }
+
+        private bool underStep(Move move)
+        {
+            if (move.Step < maxStep)
+            {
+                return true;
+            }
+            return false;
         }
 
         //
@@ -223,9 +234,11 @@ namespace BotGammon
 
             if (!foundPossibleMove)// on est dans une feuille, on ajoute le move a la liste.
             {
-                if (listeMoves.Count > 0)
+                Move move = new Move(listeMoves);
+                if (maxStep <= move.Step)
                 {
-                    listPossibleMoves.Add(new Move(listeMoves));
+                    listPossibleMoves.Add(move);
+                    maxStep = move.Step;
                 }
             }
 
@@ -304,7 +317,7 @@ namespace BotGammon
             player = !player;
         }
 
-
+        private int maxStep;
         public int[] board = new int[24]; // représentation du board
         public List<int> dice = new List<int>(); // la valeur des dés joués
         public int bar; // le nombre de pion hors jeu

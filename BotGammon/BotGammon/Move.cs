@@ -10,13 +10,24 @@ namespace BotGammon
     {
         public Move(List<Tuple<int, int>> listeMovesIntermediaires)
         {
+            step = 0;
             moveA = listeMovesIntermediaires[0];
+            step += calcStep(listeMovesIntermediaires[0]);
             if (listeMovesIntermediaires.Count >= 2)
+            {
                 moveB = listeMovesIntermediaires[1];
+                step += calcStep(listeMovesIntermediaires[1]);
+            }
             if (listeMovesIntermediaires.Count >= 3)
+            {
                 moveC = listeMovesIntermediaires[2];
+                step += calcStep(listeMovesIntermediaires[2]);
+            }
             if (listeMovesIntermediaires.Count >= 4)
+            {
                 moveD = listeMovesIntermediaires[3];
+                step += calcStep(listeMovesIntermediaires[3]);
+            }
         }
 
 
@@ -78,6 +89,16 @@ namespace BotGammon
             return cmd;
         }
 
+        private int calcStep(Tuple<int, int> move)
+        {
+            int step = move.Item1;
+            if (move.Item2 > 0)
+            {
+                step -= move.Item2;
+            }
+            return step;
+        }
+
         public Tuple<int, int> MoveA
         {
             get { return moveA; }
@@ -102,10 +123,17 @@ namespace BotGammon
             set { moveD = value; }
         }
 
+        public int Step
+        {
+            get { return step; }
+            set { step = value; }
+        }
+
         private Tuple<int, int> moveA;
         private Tuple<int, int> moveB;
         private Tuple<int, int> moveC;
         private Tuple<int, int> moveD;
+        private int step;
 
         public int CompareTo(object obj)
         {

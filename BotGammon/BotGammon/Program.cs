@@ -60,7 +60,7 @@ namespace BotGammon
             process.ErrorDataReceived += (s, e) => Console.WriteLine(e.Data);
             process.ErrorDataReceived += (s, e) => checkForError(e.Data);
 
-            process.StandardInput.WriteLine("set matchlength 1");
+            process.StandardInput.WriteLine("set matchlength 101");
             process.StandardInput.WriteLine("set cube use off");
             process.StandardInput.WriteLine("set output rawboard on");
 
@@ -77,7 +77,7 @@ namespace BotGammon
 
                 while (!Ready)
                 {
-                    Thread.Sleep(10);
+                    Thread.Sleep(1);
                 }
 
                 Grille grille = new Grille(Rawboard);
@@ -86,7 +86,7 @@ namespace BotGammon
 
                 process.StandardInput.WriteLine(nextMove.GetCmd());
             }
-			process.StandardInput.WriteLine("save game " + EXPORT_PATH + "tester.sgf");
+			process.StandardInput.WriteLine("save match " + EXPORT_PATH + "tester.sgf");
 
             Console.WriteLine("********** finished : " + CountWin + " games won ******************");
             Console.ReadLine();
@@ -127,7 +127,6 @@ namespace BotGammon
             if (data.Contains("Illegal"))
             {
                 Console.WriteLine(Rawboard);
-                Console.ReadLine();
             }
         }
     }
