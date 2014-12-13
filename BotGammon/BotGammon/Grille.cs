@@ -190,12 +190,12 @@ namespace BotGammon
         //
         // Cette fonction va retourner la liste de toute les moves possible de cette grille.
         //
-        public List<Move> ListPossibleMoves()
+        public HashSet<Move> ListPossibleMoves()
         {
             maxStep = 0;
-            listPossibleMoves = new List<Move>();
+            listPossibleMoves = new HashSet<Move>();
             GetPossibleMoves(this, new List<Tuple<int, int>>());
-            listPossibleMoves.RemoveAll(underStep); // TODO FIXER CA OSTI DE CRISS DE MARDE!!!
+            listPossibleMoves.RemoveWhere(underStep);
             return listPossibleMoves;
         }
 
@@ -324,7 +324,7 @@ namespace BotGammon
         public int bar; // le nombre de pion hors jeu
         public int oppBar; // le nombre de pion hors jeu de l'adversaire.
         public bool player; // si on est le premier joueur ( si faux, bar et oppBar sont inversé.)
-        private List<Move> listPossibleMoves;
+        private HashSet<Move> listPossibleMoves;
 
     }
 }

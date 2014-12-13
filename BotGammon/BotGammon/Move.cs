@@ -106,25 +106,21 @@ namespace BotGammon
         public Tuple<int, int> MoveA
         {
             get { return moveA; }
-            set { moveA = value; }
         }
 
         public Tuple<int, int> MoveB
         {
             get { return moveB; }
-            set { moveB = value; }
         }
 
         public Tuple<int, int> MoveC
         {
             get { return moveC; }
-            set { moveC = value; }
         }
 
         public Tuple<int, int> MoveD
         {
             get { return moveD; }
-            set { moveD = value; }
         }
 
         public int Step
@@ -139,10 +135,10 @@ namespace BotGammon
             set { diceUsed = value; }
         }
 
-        private Tuple<int, int> moveA;
-        private Tuple<int, int> moveB;
-        private Tuple<int, int> moveC;
-        private Tuple<int, int> moveD;
+        private readonly Tuple<int, int> moveA;
+        private readonly Tuple<int, int> moveB;
+        private readonly Tuple<int, int> moveC;
+        private readonly Tuple<int, int> moveD;
         private int step;
         private int diceUsed;
 
@@ -164,5 +160,30 @@ namespace BotGammon
         //    }
         //    return -1;
         //}
+
+        protected bool Equals(Move other)
+        {
+            return Equals(moveA, other.moveA) && Equals(moveB, other.moveB) && Equals(moveC, other.moveC) && Equals(moveD, other.moveD);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((Move) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int hashCode = (moveA != null ? moveA.GetHashCode() : 0);
+                hashCode = (hashCode*397) ^ (moveB != null ? moveB.GetHashCode() : 0);
+                hashCode = (hashCode*397) ^ (moveC != null ? moveC.GetHashCode() : 0);
+                hashCode = (hashCode*397) ^ (moveD != null ? moveD.GetHashCode() : 0);
+                return hashCode;
+            }
+        }
     }
 }
