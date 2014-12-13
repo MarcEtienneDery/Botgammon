@@ -95,8 +95,8 @@ namespace BotGammon
             //On enlève le dé de la liste des dés
             dice.Remove(Math.Abs(tuple.Item2 - tuple.Item1));
 
-            if (player)
-            {
+            //if (player)
+            //{
 
                 //Si notre move proviens du bar
                 if (tuple.Item1 == 25)
@@ -133,44 +133,44 @@ namespace BotGammon
                     board[tuple.Item2 - 1]++;
                 }
 
-            }
-            else
-            {
-                //Si notre move proviens du bar
-                if (tuple.Item1 == 0)
-                {
-                    oppBar--;
-                    //Si on s'apprette a manger un checker ennemi en sortant du bar
-                    if (board[tuple.Item2 - 1] == 1)
-                    {
-                        board[tuple.Item2 - 1] = -1;
-                        bar++;
-                    }
-                    else
-                    {
-                        board[tuple.Item2 - 1]--;
-                    }
+            //}
+            //else
+            //{
+            //    //Si notre move proviens du bar
+            //    if (tuple.Item1 == 0)
+            //    {
+            //        oppBar--;
+            //        //Si on s'apprette a manger un checker ennemi en sortant du bar
+            //        if (board[tuple.Item2 - 1] == 1)
+            //        {
+            //            board[tuple.Item2 - 1] = -1;
+            //            bar++;
+            //        }
+            //        else
+            //        {
+            //            board[tuple.Item2 - 1]--;
+            //        }
 
-                }
-                //On vide le board
-                else if (tuple.Item2 <= 0)
-                {
-                    board[tuple.Item1 - 1]++;
-                }
-                //Si on s'apprette a manger un checker ennemi
-                else if (board[tuple.Item2 - 1] == 1)
-                {
-                    board[tuple.Item1 - 1]++;
-                    board[tuple.Item2 - 1] = -1;
-                    oppBar++;
-                }
-                //coup normal
-                else
-                {
-                    board[tuple.Item1 - 1]++;
-                    board[tuple.Item2 - 1]--;
-                }
-            }
+            //    }
+            //    //On vide le board
+            //    else if (tuple.Item2 <= 0)
+            //    {
+            //        board[tuple.Item1 - 1]++;
+            //    }
+            //    //Si on s'apprette a manger un checker ennemi
+            //    else if (board[tuple.Item2 - 1] == 1)
+            //    {
+            //        board[tuple.Item1 - 1]++;
+            //        board[tuple.Item2 - 1] = -1;
+            //        oppBar++;
+            //    }
+            //    //coup normal
+            //    else
+            //    {
+            //        board[tuple.Item1 - 1]++;
+            //        board[tuple.Item2 - 1]--;
+            //    }
+            //}
         }
 
         //
@@ -228,7 +228,7 @@ namespace BotGammon
                 }
             }
 
-            if (!foundPossibleMove)// on est dans une feuille, on ajoute le move a la liste.
+            if (!foundPossibleMove && listeMoves.Count > 0)// on est dans une feuille, on ajoute le move a la liste.
             {
                 Move move = new Move(listeMoves);
                 if (maxDice <= move.DiceUsed && maxStep <= move.Step)
