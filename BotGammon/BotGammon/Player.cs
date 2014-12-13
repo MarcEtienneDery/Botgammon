@@ -77,7 +77,9 @@ namespace BotGammon
         {
             if (profondeur == 0) // on est au bout.
             {
-                return Heuristique(grille);
+                Grille grillePourEnnemi = new Grille(grille);
+                grillePourEnnemi.ReverseBoard();
+                return Heuristique(grille) - Heuristique(grillePourEnnemi);
             }
 
             if (grille.dice.Count > 0) // un joueur peut jouer.
@@ -134,7 +136,6 @@ namespace BotGammon
         private static double Heuristique(Grille grille)
         {
             double valeurHeuristique = 0;
-            if(grille.player) grille.ReverseBoard();
 
             // Aucune menace: http://i.imgur.com/ktuiqfY.jpg
             // Menace ennemie: http://i.imgur.com/oBM4sIj.jpg
@@ -163,7 +164,7 @@ namespace BotGammon
             {
                 int nbPairsColles = 0;
                 double multiplicateurRecompense = 0;
-                //TODO: checker nombre de groupes de pairs
+                int nbGroupesPairs = 0;
                 for (int i = 0; i < grille.board.Length; i++)
                 {
                     // On pénalise tous les checkers non protégés
@@ -188,6 +189,7 @@ namespace BotGammon
                         if (i >= 1 && grille.board[i - 1] < 2)
                         {
                             nbPairsColles = 0;
+                            nbGroupesPairs ++;
                         }
 
                         bool ennemiEnAvant = grille.EnnemiEnAvantDuPoint(i);
@@ -202,53 +204,48 @@ namespace BotGammon
                         }
                     }
                 }
+                double valeurHeuristiquePairs = 0;
                 switch (nbPairsColles)
                 {
                     case 0:
                         break;
                     case 1:
-                        valeurHeuristique += (5 * multiplicateurRecompense);
+                        valeurHeuristiquePairs += (5 * multiplicateurRecompense);
                         break;
                     case 2:
-                        valeurHeuristique += (15 * multiplicateurRecompense);
+                        valeurHeuristiquePairs += (15 * multiplicateurRecompense);
                         break;
                     case 3:
-                        valeurHeuristique += (40 * multiplicateurRecompense);
+                        valeurHeuristiquePairs += (40 * multiplicateurRecompense);
                         break;
                     case 4:
-                        valeurHeuristique += (70 * multiplicateurRecompense);
+                        valeurHeuristiquePairs += (70 * multiplicateurRecompense);
                         break;
                     case 5:
-                        valeurHeuristique += (110 * multiplicateurRecompense);
+                        valeurHeuristiquePairs += (110 * multiplicateurRecompense);
                         break;
                     case 6:
-                        valeurHeuristique += (200 * multiplicateurRecompense);
+                        valeurHeuristiquePairs += (200 * multiplicateurRecompense);
                         break;
                     default:
-                        valeurHeuristique += (200 * multiplicateurRecompense);
+                        valeurHeuristiquePairs += (200 * multiplicateurRecompense);
                         break;
                 }
-
+                valeurHeuristiquePairs *= nbGroupesPairs;
+                valeurHeuristique += valeurHeuristiquePairs;
             }
 
             // Plus on peut manger de checkers, mieux c'est
-            // TODO: Vérifier si la façon de gérer l'opponent est correcte...
             // TODO: Pondérer en fonction de la position du checker mangé
-            //if (grille.player)
-            //{
-            //    valeurHeuristique += 1000 * grille.oppBar;
-            //}
-            //else
-            //{
-            //    valeurHeuristique += 1000 * grille.bar;
-            //}
             valeurHeuristique += 1000*grille.bar;
 
             // Plus on peut bear-off (rentrer) de checkers, mieux c'est
             valeurHeuristique += grille.GetNbPionsJoueurRentres() * 10000;
 
-            // TODO: Faire le check pour savoir lequel on veut retourner!
-            return valeurHeuristique;
+            if (grille.player)
+            {
+                return valeurHeuristique;
+            }
             return -valeurHeuristique;
         }
 
