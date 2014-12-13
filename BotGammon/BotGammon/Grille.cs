@@ -307,6 +307,10 @@ namespace BotGammon
 
         public void ReverseBoard()
         {
+            for (int i = 0; i < board.Length; i++)
+            {
+                board[i] = -board[i];
+            }
             Array.Reverse(board);
             int temp = oppBar;
             bar = oppBar;

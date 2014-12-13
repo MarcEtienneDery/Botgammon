@@ -26,9 +26,6 @@ namespace BotGammon
         static bool Ready = false;
         static void Main(string[] args)
         {
-			// TODO : faire un mode de test ou l'on joue 100 partie et on garde le nombre de victoire.( pour notre présentation)
-			//	le fonctionement désiré serait : BotGammon --path <the path to gnubg-cli.exe> --test 
-			// 
 			ProcessStartInfo startInfo;
 			String EXPORT_PATH;
 
@@ -70,7 +67,7 @@ namespace BotGammon
 
             IPlayer player = new Player();
 
-            while (CountGame < 1000)// boucle pour chaque coup qu'on doit jouer.
+            while (CountGame < 100)// boucle pour chaque coup qu'on doit jouer.
             {
                 // on se prépare à jouer le prochain coup.
                 Ready = false;
@@ -90,7 +87,7 @@ namespace BotGammon
 
                 Grille grille = new Grille(Rawboard);
 
-                Move nextMove = player.GetNextMove(grille, 2);// we ask for the next move to make.
+                Move nextMove = player.GetNextMove(grille, 1);// we ask for the next move to make.
 
                 process.StandardInput.WriteLine(nextMove.GetCmd());
             }

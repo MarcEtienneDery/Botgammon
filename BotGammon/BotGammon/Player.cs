@@ -79,7 +79,8 @@ namespace BotGammon
             {
                 Grille grillePourEnnemi = new Grille(grille);
                 grillePourEnnemi.ReverseBoard();
-                return Heuristique(grille) - Heuristique(grillePourEnnemi);
+                var test = Heuristique(grillePourEnnemi) - Heuristique(grille);
+                return test;
             }
 
             if (grille.dice.Count > 0) // un joueur peut jouer.
