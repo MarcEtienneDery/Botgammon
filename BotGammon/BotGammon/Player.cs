@@ -174,12 +174,13 @@ namespace BotGammon
 
                         if (ennemiEnAvant)
                         {
-                            valeurHeuristique -= 150 * (-i);
+                            // Plus pénalisant si on est proche de la fin
+                            valeurHeuristique -= 2000 / (double)(i+1);
                         }
                         // Moins grave s'il y a aucun checker ennemi en avant, mais quand même risqué
                         else
                         {
-                            valeurHeuristique -= 15 * (-i);
+                            valeurHeuristique -= 200 / (double)(i + 1);
                         }
                     }
 
@@ -196,11 +197,12 @@ namespace BotGammon
                         nbPairsColles++;
                         if (ennemiEnAvant)
                         {
-                            multiplicateurRecompense += 2;
+                            multiplicateurRecompense += 2 + (0.1*i);
                         }
+                        // Se trouve dans les 6 derniers points
                         if (i <= 5)
                         {
-                            multiplicateurRecompense += 2;
+                            multiplicateurRecompense += 2 + (0.1*i);
                         }
                     }
                 }
@@ -236,7 +238,7 @@ namespace BotGammon
             }
 
             // Plus on peut manger de checkers, mieux c'est
-            // TODO: Pondérer en fonction de la position du checker mangé
+            // TODO: Pondérer en fonction de la position du checker mangé (HOW!?)
             valeurHeuristique += 1000*grille.bar;
 
             // Plus on peut bear-off (rentrer) de checkers, mieux c'est
