@@ -190,12 +190,12 @@ namespace BotGammon
         //
         // Cette fonction va retourner la liste de toute les moves possible de cette grille.
         //
-        public SortedSet<Move> ListPossibleMoves()
+        public List<Move> ListPossibleMoves()
         {
             maxStep = 0;
-            listPossibleMoves = new SortedSet<Move>();
+            listPossibleMoves = new List<Move>();
             GetPossibleMoves(this, new List<Tuple<int, int>>());
-            listPossibleMoves.RemoveWhere(move => underStep(move)); // TODO FIXER CA OSTI DE CRISS DE MARDE!!!
+            listPossibleMoves.RemoveAll(underStep); // TODO FIXER CA OSTI DE CRISS DE MARDE!!!
             return listPossibleMoves;
         }
 
@@ -213,7 +213,6 @@ namespace BotGammon
         //
         private void GetPossibleMoves(Grille grille, List<Tuple<int,int>> listeMoves)
         {
-            var moves = new SortedSet<Move>();
             bool foundPossibleMove = false;
             for (int i = 0; i < grille.dice.Count; i++)
             {
@@ -247,9 +246,9 @@ namespace BotGammon
         //
         // Retourne la liste des moves possibles pour un dé
         //
-        private SortedSet<Tuple<int, int>> GetPossibleMovesForDie(Grille grille, int die)
+        private List<Tuple<int, int>> GetPossibleMovesForDie(Grille grille, int die)
         {
-            var moves = new SortedSet<Tuple<int, int>>();
+            var moves = new List<Tuple<int, int>>();
             //si l'on doit vider le bar.
             if (grille.bar != 0)
             {
@@ -323,7 +322,7 @@ namespace BotGammon
         public int bar; // le nombre de pion hors jeu
         public int oppBar; // le nombre de pion hors jeu de l'adversaire.
         public bool player; // si on est le premier joueur ( si faux, bar et oppBar sont inversé.)
-        private SortedSet<Move> listPossibleMoves;
+        private List<Move> listPossibleMoves;
 
     }
 }

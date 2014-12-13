@@ -40,7 +40,7 @@ namespace BotGammon
             double valeurOptimal = Double.MinValue;
 		    Move moveOptimal = null;
 
-            SortedSet<Move> possibleMoves = grille.ListPossibleMoves();
+            List<Move> possibleMoves = grille.ListPossibleMoves();
             foreach (var possibleMove in possibleMoves)
             {
                 Grille moveGrille = new Grille(grille);
@@ -84,7 +84,7 @@ namespace BotGammon
             {
                 if (grille.player) // on joue
                 {
-                    SortedSet<Move> possibleMoves = grille.ListPossibleMoves();
+                    List<Move> possibleMoves = grille.ListPossibleMoves();
                     foreach (var possibleMove in possibleMoves)
                     {
                         Grille moveGrille = new Grille(grille);
@@ -100,7 +100,7 @@ namespace BotGammon
                 }
                 else //l'adversaire joue.
                 {
-                    SortedSet<Move> possibleMoves = grille.ListPossibleMoves();
+                    List<Move> possibleMoves = grille.ListPossibleMoves();
                     foreach (var possibleMove in possibleMoves)
                     {
                         Grille moveGrille = new Grille(grille);

@@ -135,10 +135,23 @@ namespace BotGammon
         private Tuple<int, int> moveD;
         private int step;
 
-        public int CompareTo(object obj)
-        {
-            // TODO si on veut faire du prunning.
-            return 1;
-        }
+        //public int CompareTo(object obj)
+        //{
+        //    if (obj == null) return 1;
+
+        //    Move autreMove = obj as Move;
+        //    if (autreMove != null)
+        //    {
+        //        if (moveA.Item1 == autreMove.moveA.Item1 && moveA.Item2 == autreMove.moveA.Item2 &&
+        //            moveB.Item1 == autreMove.moveB.Item1 && moveB.Item2 == autreMove.moveB.Item2 &&
+        //            moveC.Item1 == autreMove.moveC.Item1 && moveC.Item2 == autreMove.moveC.Item2 &&
+        //            moveD.Item1 == autreMove.moveD.Item1 && moveD.Item2 == autreMove.moveD.Item2)
+        //        {
+        //            return 0;
+        //        }
+                
+        //    }
+        //    return -1;
+        //}
     }
 }
