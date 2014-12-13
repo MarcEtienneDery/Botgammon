@@ -32,7 +32,7 @@ namespace BotGammon
         }
 
         //
-        // constructeur de grille à partir du parsing du fichier snowie.
+        // constructeur par copie
         //
         public Grille(Grille grille)
         {
@@ -46,7 +46,7 @@ namespace BotGammon
         //
         // si on est rendu à la dernière phase de jeu ou l'on doit vider nos pions.
         //
-        public bool isFinalStage()
+        public bool IsFinalStage()
         {
             if (player)
             {
@@ -245,7 +245,7 @@ namespace BotGammon
                     moves.Add(new Tuple<int, int>(25, 25 - die));
                 }
             }
-            else if (grille.isFinalStage())  // si on est rendu a vider la planche.
+            else if (grille.IsFinalStage())  // si on est rendu a vider la planche.
             {
                 for (int i = 0; i < 5; i++)
                 {
@@ -295,14 +295,13 @@ namespace BotGammon
             return 15 - nbPionsJoueur;
         }
 
-        public Grille ReverseBoard(Grille grille)
+        public void ReverseBoard()
         {
-            Grille newGrille = new Grille(grille);
-            newGrille.board = grille.board;
-            Array.Reverse(newGrille.board);
-            newGrille.bar = grille.oppBar;
-            newGrille.oppBar = grille.bar;
-            return newGrille;
+            Array.Reverse(board);
+            int temp = oppBar;
+            bar = oppBar;
+            oppBar = temp;
+            player = !player;
         }
 
 
