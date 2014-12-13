@@ -201,7 +201,7 @@ namespace BotGammon
 
         private bool underStep(Move move)
         {
-            if (move.Step < maxStep)
+            if (move.Step < maxStep || move.DiceUsed < maxDice)
             {
                 return true;
             }
@@ -234,10 +234,11 @@ namespace BotGammon
             if (!foundPossibleMove)// on est dans une feuille, on ajoute le move a la liste.
             {
                 Move move = new Move(listeMoves);
-                if (maxStep <= move.Step)
+                if (maxDice <= move.DiceUsed && maxStep <= move.Step)
                 {
                     listPossibleMoves.Add(move);
                     maxStep = move.Step;
+                    maxDice = move.DiceUsed;
                 }
             }
 
@@ -317,6 +318,7 @@ namespace BotGammon
         }
 
         private int maxStep;
+        private int maxDice;
         public int[] board = new int[24]; // représentation du board
         public List<int> dice = new List<int>(); // la valeur des dés joués
         public int bar; // le nombre de pion hors jeu

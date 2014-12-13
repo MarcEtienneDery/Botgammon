@@ -57,10 +57,11 @@ namespace BotGammon
             process.OutputDataReceived += (s, e) => checkForEndGame(e.Data);
             process.OutputDataReceived += (s, e) => checkForBoard(e.Data);
             process.OutputDataReceived += (s, e) => checkForRolledDice(e.Data);
+            process.OutputDataReceived += (s, e) => checkForResignation(e.Data, process);
             process.ErrorDataReceived += (s, e) => Console.WriteLine(e.Data);
             process.ErrorDataReceived += (s, e) => checkForError(e.Data);
 
-            process.StandardInput.WriteLine("set matchlength 101");
+            process.StandardInput.WriteLine("set matchlength 1001");
             process.StandardInput.WriteLine("set cube use off");
             process.StandardInput.WriteLine("set output rawboard on");
 
@@ -69,15 +70,22 @@ namespace BotGammon
 
             IPlayer player = new Player();
 
-            while (CountGame < 100)// boucle pour chaque coup qu'on doit jouer.
+            while (CountGame < 1000)// boucle pour chaque coup qu'on doit jouer.
             {
                 // on se prépare à jouer le prochain coup.
                 Ready = false;
                 process.StandardInput.WriteLine("roll"); // on roll les dés.
 
+                int counterTime = 0;
                 while (!Ready)
                 {
-                    Thread.Sleep(1);
+                    Thread.Sleep(10);
+                    counterTime++;
+                    if (counterTime > 100)
+                    {
+                        process.StandardInput.WriteLine("roll"); // on roll les dés.
+                        counterTime = 0;
+                    }
                 }
 
                 Grille grille = new Grille(Rawboard);
@@ -127,6 +135,14 @@ namespace BotGammon
             if (data.Contains("Illegal"))
             {
                 Console.WriteLine(Rawboard);
+            }
+        }
+
+        static void checkForResignation(String data, Process process)
+        {
+            if (data.Contains("offers to resign"))
+            {
+                process.StandardInput.WriteLine("accept");
             }
         }
     }

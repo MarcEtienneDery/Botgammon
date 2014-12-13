@@ -6,27 +6,31 @@ using System.Threading.Tasks;
 
 namespace BotGammon
 {
-    class Move : IComparable
+    class Move
     {
         public Move(List<Tuple<int, int>> listeMovesIntermediaires)
         {
             step = 0;
+            diceUsed = 1;
             moveA = listeMovesIntermediaires[0];
             step += calcStep(listeMovesIntermediaires[0]);
             if (listeMovesIntermediaires.Count >= 2)
             {
                 moveB = listeMovesIntermediaires[1];
                 step += calcStep(listeMovesIntermediaires[1]);
+                diceUsed++;
             }
             if (listeMovesIntermediaires.Count >= 3)
             {
                 moveC = listeMovesIntermediaires[2];
                 step += calcStep(listeMovesIntermediaires[2]);
+                diceUsed++;
             }
             if (listeMovesIntermediaires.Count >= 4)
             {
                 moveD = listeMovesIntermediaires[3];
                 step += calcStep(listeMovesIntermediaires[3]);
+                diceUsed++;
             }
         }
 
@@ -129,11 +133,18 @@ namespace BotGammon
             set { step = value; }
         }
 
+        public int DiceUsed
+        {
+            get { return diceUsed; }
+            set { diceUsed = value; }
+        }
+
         private Tuple<int, int> moveA;
         private Tuple<int, int> moveB;
         private Tuple<int, int> moveC;
         private Tuple<int, int> moveD;
         private int step;
+        private int diceUsed;
 
         //public int CompareTo(object obj)
         //{
