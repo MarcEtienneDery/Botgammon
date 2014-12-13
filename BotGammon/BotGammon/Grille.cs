@@ -48,18 +48,15 @@ namespace BotGammon
         //
         public bool IsFinalStage()
         {
-            if (player)
+            if (bar > 0) // si le bar n'est pas vide
             {
-                if (bar > 0) // si le bar n'est pas vide
+                return false;
+            }
+            for (int i = 6; i < 24; i++) // si on trouve des pion encore en jeu.
+            {
+                if (board[i] > 0)
                 {
                     return false;
-                }
-                for (int i = 5; i < 24; i++) // si on trouve des pion encore en jeu.
-                {
-                    if (board[i] > 0)
-                    {
-                        return false;
-                    }
                 }
             }
             return true;
@@ -260,7 +257,7 @@ namespace BotGammon
             }
             else if (grille.IsFinalStage())  // si on est rendu a vider la planche.
             {
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < 6; i++)
                 {
                     if (grille.board[i] > 0)
                     {

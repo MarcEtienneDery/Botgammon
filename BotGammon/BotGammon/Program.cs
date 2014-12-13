@@ -79,7 +79,7 @@ namespace BotGammon
                 int counterTime = 0;
                 while (!Ready)
                 {
-                    Thread.Sleep(10);
+                    Thread.Sleep(5);
                     counterTime++;
                     if (counterTime > 100)
                     {
@@ -102,7 +102,7 @@ namespace BotGammon
 
         static void checkForEndGame(String data)
         {
-            if (data.Contains("wins"))
+            if (data.Contains("wins a single game and "))
             {
                 CountGame++;
                 Console.WriteLine(CountGame);
