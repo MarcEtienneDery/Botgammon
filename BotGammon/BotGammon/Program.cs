@@ -69,7 +69,7 @@ namespace BotGammon
 
             TimeSpan tempsTotal = new TimeSpan();
             double nbCoups = 0.0;
-            while (CountGame < 100)// boucle pour chaque coup qu'on doit jouer.
+            while (CountGame < Settings.TOTAL_GAMES)// boucle pour chaque coup qu'on doit jouer.
             {
                 // on se prépare à jouer le prochain coup.
                 Ready = false;
@@ -89,20 +89,30 @@ namespace BotGammon
 
                 Grille grille = new Grille(Rawboard);
 
-                Stopwatch stopWatch = new Stopwatch();
-                stopWatch.Start();
+                Stopwatch stopWatch;
+                if (Settings.MESURE_MOVE_TIME)
+                {
+                    stopWatch = new Stopwatch();
+                    stopWatch.Start();
+                }
 
                 Move nextMove = player.GetNextMove(grille, 1);// we ask for the next move to make.
                 nbCoups++;
-                stopWatch.Stop();
-                tempsTotal = tempsTotal.Add(stopWatch.Elapsed);
+                if (Settings.MESURE_MOVE_TIME)
+                {
+                    stopWatch.Stop();
+                    tempsTotal = tempsTotal.Add(stopWatch.Elapsed);
+                }
 
                 process.StandardInput.WriteLine(nextMove.GetCmd());
             }
 			process.StandardInput.WriteLine("save match " + EXPORT_PATH + "tester.sgf");
 
             Console.WriteLine("********** finished : " + CountWin + " games won ******************");
-            Console.WriteLine("Temps de CPU moyen par coup: " + tempsTotal.TotalMilliseconds / nbCoups + "ms.");
+            if (Settings.MESURE_MOVE_TIME)
+            {
+                Console.WriteLine("Temps de CPU moyen par coup: " + tempsTotal.TotalMilliseconds / nbCoups + "ms.");
+            }
             Console.ReadLine();
         }
 
