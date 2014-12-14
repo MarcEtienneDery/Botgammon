@@ -22,11 +22,12 @@ namespace BotGammon
                     {
                         dices.Add(i);
                         dices.Add(j);
-                        possibleDiceRoll.Add(new Tuple<double, List<int>>(1/36, dices));
+                        double poss = 1.0/36.0;
+                        possibleDiceRoll.Add(new Tuple<double, List<int>>(1.0 / 36.0, dices));
                     }
                     else
                     {
-                        possibleDiceRoll.Add(new Tuple<double, List<int>>(2 / 36, dices));
+                        possibleDiceRoll.Add(new Tuple<double, List<int>>(2.0 / 36.0, dices));
                     }
                 }
             }
@@ -52,6 +53,10 @@ namespace BotGammon
                     valeurOptimal = valeurTest;
                     moveOptimal = possibleMove;
                 }
+            }
+            if (moveOptimal == null)
+            {
+                Console.WriteLine("WTF");
             }
             return moveOptimal;
             //Random random = new Random();
@@ -79,8 +84,16 @@ namespace BotGammon
             {
                 Grille grillePourEnnemi = new Grille(grille);
                 grillePourEnnemi.ReverseBoard();
-                var test = Heuristique(grillePourEnnemi) - Heuristique(grille);
-                return test;
+                double test = Heuristique(grille) - Heuristique(grillePourEnnemi);
+                if (grille.player)
+                {
+                    return test;
+                }
+                else
+                {
+                    return -test;
+                }
+                
             }
 
             if (grille.dice.Count > 0) // un joueur peut jouer.

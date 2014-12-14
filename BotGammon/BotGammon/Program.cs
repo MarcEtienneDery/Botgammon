@@ -87,7 +87,7 @@ namespace BotGammon
 
                 Grille grille = new Grille(Rawboard);
 
-                Move nextMove = player.GetNextMove(grille, 1);// we ask for the next move to make.
+                Move nextMove = player.GetNextMove(grille, 2);// we ask for the next move to make.
 
                 process.StandardInput.WriteLine(nextMove.GetCmd());
             }
