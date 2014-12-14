@@ -67,6 +67,8 @@ namespace BotGammon
 
             IPlayer player = new Player();
 
+            TimeSpan tempsTotal = new TimeSpan();
+            double nbCoups = 0.0;
             while (CountGame < 100)// boucle pour chaque coup qu'on doit jouer.
             {
                 // on se prépare à jouer le prochain coup.
@@ -87,13 +89,20 @@ namespace BotGammon
 
                 Grille grille = new Grille(Rawboard);
 
-                Move nextMove = player.GetNextMove(grille, 2);// we ask for the next move to make.
+                Stopwatch stopWatch = new Stopwatch();
+                stopWatch.Start();
+
+                Move nextMove = player.GetNextMove(grille, 1);// we ask for the next move to make.
+                nbCoups++;
+                stopWatch.Stop();
+                tempsTotal = tempsTotal.Add(stopWatch.Elapsed);
 
                 process.StandardInput.WriteLine(nextMove.GetCmd());
             }
 			process.StandardInput.WriteLine("save match " + EXPORT_PATH + "tester.sgf");
 
             Console.WriteLine("********** finished : " + CountWin + " games won ******************");
+            Console.WriteLine("Temps de CPU moyen par coup: " + tempsTotal.TotalMilliseconds / nbCoups + "ms.");
             Console.ReadLine();
         }
 
