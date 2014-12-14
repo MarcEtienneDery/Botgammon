@@ -96,7 +96,7 @@ namespace BotGammon
                     stopWatch.Start();
                 }
 
-                Move nextMove = player.GetNextMove(grille, 1);// we ask for the next move to make.
+                Move nextMove = player.GetNextMove(grille, Settings.DEPTH);// we ask for the next move to make.
                 nbCoups++;
                 if (Settings.MESURE_MOVE_TIME)
                 {
