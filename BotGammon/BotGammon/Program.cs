@@ -69,7 +69,7 @@ namespace BotGammon
 
             TimeSpan tempsTotal = new TimeSpan();
             double nbCoups = 0.0;
-            while (CountGame < Settings.TOTAL_GAMES)// boucle pour chaque coup qu'on doit jouer.d
+            while (CountGame < Settings.TOTAL_GAMES)// boucle pour chaque coup qu'on doit jouer.
             {
                 // on se prépare à jouer le prochain coup.
                 Ready = false;
