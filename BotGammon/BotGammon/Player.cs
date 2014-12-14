@@ -22,7 +22,6 @@ namespace BotGammon
                     {
                         dices.Add(i);
                         dices.Add(j);
-                        double poss = 1.0/36.0;
                         possibleDiceRoll.Add(new Tuple<double, List<int>>(1.0 / 36.0, dices));
                     }
                     else
@@ -36,11 +35,6 @@ namespace BotGammon
             minimax = ExpectiMiniMaxFactory.Factory(Settings.ALGORITHM);
 
         }
-
-		//
-		//fonction de base du minimax qui va s'occuper de la profondeur itérative.
-		//
-        
 
         public static readonly List<Tuple<double, List<int>>> possibleDiceRoll = new List<Tuple<double, List<int>>>();
         public ExpectiMiniMax minimax;

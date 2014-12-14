@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BotGammon
@@ -16,6 +17,9 @@ namespace BotGammon
             heuristique = HeuristiqueFactory.Factory(Settings.HEURISTIC);
         }
 
+        //
+        //fonction de base du minimax qui va s'occuper de la profondeur itérative.
+        //
         override public Move GetNextMove(Grille grille, int profondeur)
         {
             double valeurOptimal = Double.MinValue;
@@ -117,11 +121,26 @@ namespace BotGammon
             else // on est dans notre cas random.
             {
                 double value = 0;
-                foreach (var possDice in Player.possibleDiceRoll)
+                double[] values = new double[Player.possibleDiceRoll.Count + 1];
+                Thread[] threads = new Thread[Player.possibleDiceRoll.Count + 1];
+                int i = 0;
+
+                for (i = 0; i < Player.possibleDiceRoll.Count; i++)
                 {
                     Grille diceGrille = new Grille(grille);
-                    diceGrille.dice = possDice.Item2;
-                    value += possDice.Item1 * Execute(diceGrille, profondeur, alpha, beta);
+                    diceGrille.dice = Player.possibleDiceRoll[i].Item2;
+                    int num = i;
+                    threads[i] = new Thread(delegate()
+                    {
+                        values[num] = Player.possibleDiceRoll[num].Item1 * Execute(diceGrille, profondeur, alpha, beta);
+                    });
+                    threads[i].Start();
+                }
+
+                for (int j = 0; j < Player.possibleDiceRoll.Count; j++)
+                {
+                    threads[j].Join();
+                    value += values[j];
                 }
                 return value;
             }
