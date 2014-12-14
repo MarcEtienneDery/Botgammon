@@ -51,6 +51,7 @@
     <Compile Include="ExpectiMiniMax.cs" />
     <Compile Include="ExpectiMiniMaxAlphaBeta.cs" />
     <Compile Include="HeuristiqueFranklin.cs" />
+    <Compile Include="HeuristiqueSimple.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Move.cs" />
     <Compile Include="Player.cs" />

@@ -14,6 +14,15 @@ namespace BotGammon
             
             // Possibilite d'ajout d'heuristiques ici
 
+            if (heuristique == "HeuristiqueFranklin")
+            {
+                h = new HeuristiqueFranklin();
+            }
+            else if (heuristique == "HeuristiqueSimple")
+            {
+                h = new HeuristiqueSimple();
+            }
+
             return h;
         }
     }
