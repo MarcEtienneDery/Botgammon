@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace BotGammon
 {
-    interface IPlayer
+    abstract class Heuristique
     {
-        Move GetNextMove(Grille pos, int depth);
+        abstract public double Calculer(Grille grille);
     }
 }

@@ -44,8 +44,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HeuristiqueFactory.cs" />
+    <Compile Include="ExpectiMiniMaxFactory.cs" />
+    <Compile Include="ExpectiMiniMaxSimple.cs" />
+    <Compile Include="Heuristique.cs" />
+    <Compile Include="ExpectiMiniMax.cs" />
+    <Compile Include="ExpectiMiniMaxAlphaBeta.cs" />
+    <Compile Include="HeuristiqueFranklin.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="IPlayer.cs" />
     <Compile Include="Move.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
