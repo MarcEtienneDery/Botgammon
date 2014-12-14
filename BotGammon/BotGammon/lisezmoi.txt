@@ -12,3 +12,6 @@ Pour Linux, il faut télécharger Mono pour compiler le projet. Monodevelop perm
 
 Sur Windows, BotGammon prend en argument le chemin vers gnubg version command-line.
 "<chemin d'installation>\\gnubg-cli.exe"
+
+Algorithme expectiminimax inspiré du pseudo-code:
+http://en.wikipedia.org/wiki/Expectiminimax_tree
