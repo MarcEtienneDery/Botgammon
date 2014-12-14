@@ -114,7 +114,7 @@ namespace BotGammon
 
             // Plus on peut manger de checkers, mieux c'est
             // TODO: Pondérer en fonction de la position du checker mangé (HOW!?)
-            valeurHeuristique += 1000 * grille.bar;
+            valeurHeuristique += 1000 * grille.oppBar;
 
             // Plus on peut bear-off (rentrer) de checkers, mieux c'est
             valeurHeuristique += grille.GetNbPionsJoueurRentres() * 10000;
