@@ -187,3 +187,9 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
+
+# vim temp files
+*.swp
+
+# LaTeX temp files
+*.aux
