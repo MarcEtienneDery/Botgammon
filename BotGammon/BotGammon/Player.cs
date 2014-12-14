@@ -22,7 +22,6 @@ namespace BotGammon
                     {
                         dices.Add(i);
                         dices.Add(j);
-                        double poss = 1.0/36.0;
                         possibleDiceRoll.Add(new Tuple<double, List<int>>(1.0 / 36.0, dices));
                     }
                     else
@@ -134,11 +133,26 @@ namespace BotGammon
             else // on est dans notre cas random.
             {
                 double value = 0;
-                foreach (var possDice in possibleDiceRoll)
+                double[] values = new double[possibleDiceRoll.Count + 1];
+                Thread[] threads = new Thread[possibleDiceRoll.Count + 1];
+                int i = 0;
+
+                for ( i = 0; i < possibleDiceRoll.Count; i++)
                 {
                     Grille diceGrille = new Grille(grille);
-                    diceGrille.dice = possDice.Item2;
-                    value += possDice.Item1 * ExpectiMinimax(diceGrille, profondeur, alpha, beta);
+                    diceGrille.dice = possibleDiceRoll[i].Item2;
+                    int num = i;
+                    threads[i] = new Thread(delegate()
+                    {
+                        values[num] = possibleDiceRoll[num].Item1 * ExpectiMinimax(diceGrille, profondeur, alpha, beta);
+                    });
+                    threads[i].Start();
+                }
+             
+                for (int j = 0; j < possibleDiceRoll.Count; j++)
+                {
+                    threads[j].Join();
+                    value += values[j];
                 }
                 return value;
             }
