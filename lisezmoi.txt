@@ -1,0 +1,17 @@
+﻿Marc-Étienne Déry  DERM06099201
+Dominick Latreille LATD19099100
+François Bilodeau BILF31089104
+Philippe Pépos Petitclerc PEPP03049109
+
+Il est nécessaire d'installer l'application GNU Backgammon pour exécuter le projet. http://gnubg.org/index.php?itemid=22
+Il est disponible sur la plupart des distributions Linux (gnubg).
+
+Nous avons fait ce travail sur Windows avec Visual Studio, et donc, la compilation se faisait automatiquement.
+Il y a moyen d'utiliser le compilateur C# (csc.exe) pour compiler le code (le point d'entrée est Program.cs).
+Pour Linux, il faut télécharger Mono pour compiler le projet. Monodevelop permet de compiler et d'exécuter BotGammon.
+
+Sur Windows, BotGammon prend en argument le chemin vers gnubg version command-line.
+"<chemin d'installation>\\gnubg-cli.exe"
+
+Algorithme expectiminimax inspiré du pseudo-code:
+http://en.wikipedia.org/wiki/Expectiminimax_tree
