@@ -37,10 +37,6 @@ namespace BotGammon
                     moveOptimal = possibleMove;
                 }
             }
-            if (moveOptimal == null)
-            {
-                Console.WriteLine("WTF");
-            }
             return moveOptimal;
 
         }
