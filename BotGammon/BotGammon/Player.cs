@@ -33,7 +33,6 @@ namespace BotGammon
 
             // Load the right algorithm with settings
             minimax = ExpectiMiniMaxFactory.Factory(Settings.ALGORITHM);
-
         }
 
         public static readonly List<Tuple<double, List<int>>> possibleDiceRoll = new List<Tuple<double, List<int>>>();
