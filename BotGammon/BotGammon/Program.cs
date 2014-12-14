@@ -65,7 +65,7 @@ namespace BotGammon
             // start a new game
             process.StandardInput.WriteLine("new game");
 
-            IPlayer player = new Player();
+            Player player = new Player();
 
             TimeSpan tempsTotal = new TimeSpan();
             double nbCoups = 0.0;
@@ -96,7 +96,7 @@ namespace BotGammon
                     stopWatch.Start();
                 }
 
-                Move nextMove = player.GetNextMove(grille, Settings.DEPTH);// we ask for the next move to make.
+                Move nextMove = player.minimax.GetNextMove(grille, Settings.DEPTH);// we ask for the next move to make.
                 nbCoups++;
                 if (Settings.MESURE_MOVE_TIME)
                 {
