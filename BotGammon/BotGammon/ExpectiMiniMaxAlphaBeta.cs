@@ -13,7 +13,6 @@ namespace BotGammon
 
         public ExpectiMiniMaxAlphaBeta()
         { 
-            // TODO Call Factory instead
             heuristique = HeuristiqueFactory.Factory(Settings.HEURISTIC);
         }
 
@@ -43,20 +42,7 @@ namespace BotGammon
                 Console.WriteLine("WTF");
             }
             return moveOptimal;
-            //Random random = new Random();
-            //int num = random.Next(possibleMoves.Count);
-            //foreach (var move in possibleMoves)
-            //{
-            //    if (num <= 0)
-            //    {
-            //        return move;
-            //    }
-            //    else
-            //    {
-            //        num --;
-            //    }
-            //}
-            //return possibleMoves.Max;
+
         }
 
         // Stub method because we use header with alpha and beta vars

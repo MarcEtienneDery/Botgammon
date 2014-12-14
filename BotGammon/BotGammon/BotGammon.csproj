@@ -52,7 +52,6 @@
     <Compile Include="ExpectiMiniMaxAlphaBeta.cs" />
     <Compile Include="HeuristiqueFranklin.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="IPlayer.cs" />
     <Compile Include="Move.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
