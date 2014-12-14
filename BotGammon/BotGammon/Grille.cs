@@ -257,15 +257,27 @@ namespace BotGammon
             }
             else if (grille.IsFinalStage())  // si on est rendu a vider la planche.
             {
+                int pionLePlusEloigne = 0;
                 for (int i = 0; i < 6; i++)
                 {
                     if (grille.board[i] > 0)
                     {
-                        if (i - die < 0)
+                        pionLePlusEloigne = i + 1;
+                    }
+                }
+                for (int i = 0; i < 6; i++)
+                {
+                    if (grille.board[i] > 0)
+                    {
+                        if (i + 1 - die == 0)
                         {
                             moves.Add(new Tuple<int, int>(i + 1, i + 1 - die));
                         }
-                        else if (grille.board[i - die] >= -1) 
+                        else if (i+1 - die < 0 && die >= pionLePlusEloigne)
+                        {
+                            moves.Add(new Tuple<int, int>(i + 1, i + 1 - die));
+                        }
+                        else if (i - die >= 0 && grille.board[i - die] >= -1) 
                         {
                             moves.Add(new Tuple<int, int>(i + 1, i + 1 - die));
                         }
