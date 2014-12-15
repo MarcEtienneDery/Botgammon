@@ -15,3 +15,7 @@ Sur Windows, BotGammon prend en argument le chemin vers gnubg version command-li
 
 Algorithme expectiminimax inspiré du pseudo-code:
 http://en.wikipedia.org/wiki/Expectiminimax_tree
+
+Pour changer les settings de l'application, il suffit de faire les modifications dans le fichier.config associé à l'exécutable.
+les valeurs possibles pour heuristique sont: HeuristiqueSimple, HeuristiqueFranklin
+les valeurs possible pour l'algorithm sont:  ExpectiMiniMaxSimple, ExpectiMiniMaxAlphaBeta, ExpectiMiniMaxIterSimple, ExpectiMiniMaxIterAlphaBeta
