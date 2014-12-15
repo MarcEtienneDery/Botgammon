@@ -28,6 +28,11 @@ namespace BotGammon
                 algo = new ExpectiMiniMaxIterSimple();
                 Console.WriteLine("Using Iterative Deepening ExpectiMiniMax...");
             }
+            else if (algorithm == "ExpectiMiniMaxIterAlphaBeta")
+            {
+                algo = new ExpectiMiniMaxIterAlphaBeta();
+                Console.WriteLine("Using Iterative Deepening ExpectiMiniMax with alpha-beta pruning...");
+            }
             return algo;
         }
     }
