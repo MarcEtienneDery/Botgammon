@@ -16,7 +16,6 @@ namespace BotGammon
         public ExpectiMiniMaxIterAlphaBeta()
         {
             heuristique = HeuristiqueFactory.Factory(Settings.HEURISTIC);
-            stopwatch = new Stopwatch();
         }
 
         //
@@ -32,29 +31,25 @@ namespace BotGammon
             HashSet<Move> possibleMoves = grille.ListPossibleMoves();
             while (true)
             {
-                Console.WriteLine("\t\t" + profondeur + "\t[Starting]");
                 foreach (var possibleMove in possibleMoves)
                 {
                     Grille moveGrille = new Grille(grille);
                     moveGrille.UpdateGrille(possibleMove);
                     moveGrille.ReverseBoard();
-
-                    stopwatch.Stop();
-                    if (stopwatch.Elapsed.TotalMilliseconds > Settings.TIME_TO_MOVE)
-                    {
-                        return moveOptimal;
-                    }
-                    stopwatch.Start();
-
                     double valeurTest = Execute(moveGrille, profondeur - 1, valeurOptimal, Double.MaxValue);
                     if (valeurTest > valeurOptimal)
                     {
                         valeurOptimal = valeurTest;
                         moveOptimal = possibleMove;
-                        //Console.WriteLine("\t\t\t\t\tFound better move!");
                     }
+
+                    if (stopwatch.Elapsed.TotalMilliseconds > Settings.TIME_TO_MOVE)
+                    {
+                        stopwatch.Stop();
+                        return moveOptimal;
+                    }
+
                 }
-                Console.WriteLine("\t\t" + profondeur + "\t[Finished]");
                 profondeur++;
             }
         }
@@ -93,19 +88,18 @@ namespace BotGammon
                         Grille moveGrille = new Grille(grille);
                         moveGrille.UpdateGrille(possibleMove);
                         moveGrille.ReverseBoard();
-
-                        stopwatch.Stop();
-                        if (stopwatch.Elapsed.TotalMilliseconds > Settings.TIME_TO_MOVE)
-                        {
-                            return alpha;
-                        }
-                        stopwatch.Start();
-
                         alpha = Math.Max(alpha, Execute(moveGrille, profondeur - 1, alpha, beta));
                         if (beta <= alpha)
                         {
                             break;
                         }
+
+                        if (stopwatch.Elapsed.TotalMilliseconds > Settings.TIME_TO_MOVE)
+                        {
+                            stopwatch.Stop();
+                            return alpha;
+                        }
+
                     }
                     return alpha;
                 }
@@ -117,19 +111,18 @@ namespace BotGammon
                         Grille moveGrille = new Grille(grille);
                         moveGrille.UpdateGrille(possibleMove);
                         moveGrille.ReverseBoard();
-
-                        stopwatch.Stop();
-                        if (stopwatch.Elapsed.TotalMilliseconds > Settings.TIME_TO_MOVE)
-                        {
-                            return beta;
-                        }
-                        stopwatch.Start();
-
                         beta = Math.Min(beta, Execute(moveGrille, profondeur - 1, alpha, beta));
                         if (beta <= alpha)
                         {
                             break;
                         }
+
+                        if (stopwatch.Elapsed.TotalMilliseconds > Settings.TIME_TO_MOVE)
+                        {
+                            stopwatch.Stop();
+                            return beta;
+                        }
+
                     }
                     return beta;
                 }
@@ -143,12 +136,12 @@ namespace BotGammon
 
                 for (i = 0; i < Player.possibleDiceRoll.Count; i++)
                 {
-                    stopwatch.Stop();
+
                     if (stopwatch.Elapsed.TotalMilliseconds > Settings.TIME_TO_MOVE)
                     {
+                        stopwatch.Stop();
                         return value;
                     }
-                    stopwatch.Start();
 
                     Grille diceGrille = new Grille(grille);
                     diceGrille.dice = Player.possibleDiceRoll[i].Item2;
@@ -165,6 +158,7 @@ namespace BotGammon
                     threads[j].Join();
                     value += values[j];
                 }
+
                 return value;
             }
         }

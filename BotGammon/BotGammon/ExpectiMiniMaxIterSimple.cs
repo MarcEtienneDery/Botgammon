@@ -29,29 +29,25 @@ namespace BotGammon
             HashSet<Move> possibleMoves = grille.ListPossibleMoves();
             while (true)
             {
-                //Console.WriteLine("\t\t" + profondeur + "\t[Starting]");
                 foreach (var possibleMove in possibleMoves)
                 {
                     Grille moveGrille = new Grille(grille);
                     moveGrille.UpdateGrille(possibleMove);
                     moveGrille.ReverseBoard();
 
-                    stopwatch.Stop();
-                    if (stopwatch.Elapsed.TotalMilliseconds > Settings.TIME_TO_MOVE)
-                    {
-                        return moveOptimal;
-                    }
-                    stopwatch.Start();
-
                     double valeurTest = Execute(moveGrille, profondeur - 1);
                     if (valeurTest > valeurOptimal)
                     {
                         valeurOptimal = valeurTest;
                         moveOptimal = possibleMove;
-                        //Console.WriteLine("\t\t\t\t\tFound better move!");
                     }
+                    if (stopwatch.Elapsed.TotalMilliseconds > Settings.TIME_TO_MOVE)
+                    {
+                        stopwatch.Stop();
+                        return moveOptimal;
+                    }
+
                 }
-                //Console.WriteLine("\t\t" + profondeur + "\t[Finished]");
                 profondeur++;
             }
         }
@@ -86,14 +82,14 @@ namespace BotGammon
                         moveGrille.UpdateGrille(possibleMove);
                         moveGrille.ReverseBoard();
 
-                        stopwatch.Stop();
+                        value = Math.Max(value, Execute(moveGrille, profondeur - 1));
+
                         if (stopwatch.Elapsed.TotalMilliseconds > Settings.TIME_TO_MOVE)
                         {
+                            stopwatch.Stop();
                             return value;
                         }
-                        stopwatch.Start();
 
-                        value = Math.Max(value, Execute(moveGrille, profondeur - 1));
                     }
                     return value;
                 }
@@ -107,14 +103,14 @@ namespace BotGammon
                         moveGrille.UpdateGrille(possibleMove);
                         moveGrille.ReverseBoard();
 
-                        stopwatch.Stop();
+                        value = Math.Max(value, Execute(moveGrille, profondeur - 1));
+
                         if (stopwatch.Elapsed.TotalMilliseconds > Settings.TIME_TO_MOVE)
                         {
+                            stopwatch.Stop();
                             return value;
                         }
-                        stopwatch.Start();
 
-                        value = Math.Max(value, Execute(moveGrille, profondeur - 1));
                     }
                     return value;
                 }
