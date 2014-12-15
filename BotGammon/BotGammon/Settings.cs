@@ -9,13 +9,24 @@ namespace BotGammon
     class Settings
     {
         // Gameplay Settings
-        public const int TOTAL_GAMES = 10;
+        public const int TOTAL_GAMES = 20;
 
         // Artificial Intelligence Settings
-        public const int DEPTH = 1;
-        public const string HEURISTIC = "HeuristiqueSimple";
-        public const string ALGORITHM = "ExpectiMiniMaxSimple";
-        public const int TIME_TO_MOVE = 500; // miliseconds
+            public const int DEPTH = 1;
+            /* Possible Heuristics:
+             * HeuristiqueSimple
+             * HeuristiqueFranklin
+             * */
+            public const string HEURISTIC = "HeuristiqueSimple";
+
+            /* Possible Algorithms:
+             * ExpectiMiniMaxSimple
+             * ExpectiMiniMaxAlphaBeta
+             * ExpectiMiniMaxIterSimple
+             * ExpectiMiniMaxIterAlphaBeta
+             * */
+            public const string ALGORITHM = "ExpectiMiniMaxIterAlphaBeta";
+            public const int TIME_TO_MOVE = 1000; // miliseconds
 
         // Statistical Settings
         public const bool MESURE_MOVE_TIME = false;

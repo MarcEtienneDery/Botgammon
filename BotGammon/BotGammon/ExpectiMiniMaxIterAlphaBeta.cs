@@ -8,17 +8,19 @@ using System.Threading.Tasks;
 
 namespace BotGammon
 {
-    class ExpectiMiniMaxIterSimple : ExpectiMiniMax
+    class ExpectiMiniMaxIterAlphaBeta : ExpectiMiniMax
     {
         private Heuristique heuristique;
         private Stopwatch stopwatch;
 
-        public ExpectiMiniMaxIterSimple()
+        public ExpectiMiniMaxIterAlphaBeta()
         {
             heuristique = HeuristiqueFactory.Factory(Settings.HEURISTIC);
-            stopwatch = new Stopwatch();
         }
 
+        //
+        //fonction de base du minimax qui va s'occuper de la profondeur itérative.
+        //
         override public Move GetNextMove(Grille grille, int profondeur)
         {
             double valeurOptimal = Double.MinValue;
@@ -34,13 +36,13 @@ namespace BotGammon
                     Grille moveGrille = new Grille(grille);
                     moveGrille.UpdateGrille(possibleMove);
                     moveGrille.ReverseBoard();
-
-                    double valeurTest = Execute(moveGrille, profondeur - 1);
+                    double valeurTest = Execute(moveGrille, profondeur - 1, valeurOptimal, Double.MaxValue);
                     if (valeurTest > valeurOptimal)
                     {
                         valeurOptimal = valeurTest;
                         moveOptimal = possibleMove;
                     }
+
                     if (stopwatch.Elapsed.TotalMilliseconds > Settings.TIME_TO_MOVE)
                     {
                         stopwatch.Stop();
@@ -51,7 +53,14 @@ namespace BotGammon
                 profondeur++;
             }
         }
+
+        // Stub method because we use header with alpha and beta vars
         override public double Execute(Grille grille, int profondeur)
+        {
+            return 0.0;
+        }
+
+        public double Execute(Grille grille, int profondeur, double alpha, double beta)
         {
             if (profondeur == 0) // on est au bout.
             {
@@ -74,45 +83,48 @@ namespace BotGammon
                 if (grille.player) // on joue
                 {
                     HashSet<Move> possibleMoves = grille.ListPossibleMoves();
-                    double value = double.MinValue;
-
                     foreach (var possibleMove in possibleMoves)
                     {
                         Grille moveGrille = new Grille(grille);
                         moveGrille.UpdateGrille(possibleMove);
                         moveGrille.ReverseBoard();
-
-                        value = Math.Max(value, Execute(moveGrille, profondeur - 1));
+                        alpha = Math.Max(alpha, Execute(moveGrille, profondeur - 1, alpha, beta));
+                        if (beta <= alpha)
+                        {
+                            break;
+                        }
 
                         if (stopwatch.Elapsed.TotalMilliseconds > Settings.TIME_TO_MOVE)
                         {
                             stopwatch.Stop();
-                            return value;
+                            return alpha;
                         }
 
                     }
-                    return value;
+                    return alpha;
                 }
                 else //l'adversaire joue.
                 {
                     HashSet<Move> possibleMoves = grille.ListPossibleMoves();
-                    double value = double.MaxValue;
                     foreach (var possibleMove in possibleMoves)
                     {
                         Grille moveGrille = new Grille(grille);
                         moveGrille.UpdateGrille(possibleMove);
                         moveGrille.ReverseBoard();
-
-                        value = Math.Max(value, Execute(moveGrille, profondeur - 1));
+                        beta = Math.Min(beta, Execute(moveGrille, profondeur - 1, alpha, beta));
+                        if (beta <= alpha)
+                        {
+                            break;
+                        }
 
                         if (stopwatch.Elapsed.TotalMilliseconds > Settings.TIME_TO_MOVE)
                         {
                             stopwatch.Stop();
-                            return value;
+                            return beta;
                         }
 
                     }
-                    return value;
+                    return beta;
                 }
             }
             else // on est dans notre cas random.
@@ -124,19 +136,19 @@ namespace BotGammon
 
                 for (i = 0; i < Player.possibleDiceRoll.Count; i++)
                 {
-                    stopwatch.Stop();
+
                     if (stopwatch.Elapsed.TotalMilliseconds > Settings.TIME_TO_MOVE)
                     {
+                        stopwatch.Stop();
                         return value;
                     }
-                    stopwatch.Start();
 
                     Grille diceGrille = new Grille(grille);
                     diceGrille.dice = Player.possibleDiceRoll[i].Item2;
                     int num = i;
                     threads[i] = new Thread(delegate()
                     {
-                        values[num] = Player.possibleDiceRoll[num].Item1 * Execute(diceGrille, profondeur);
+                        values[num] = Player.possibleDiceRoll[num].Item1 * Execute(diceGrille, profondeur, alpha, beta);
                     });
                     threads[i].Start();
                 }
@@ -146,6 +158,7 @@ namespace BotGammon
                     threads[j].Join();
                     value += values[j];
                 }
+
                 return value;
             }
         }

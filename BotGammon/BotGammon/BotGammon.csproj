@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExpectiMiniMaxIterAlphaBeta.cs" />
     <Compile Include="ExpectiMiniMaxIterSimple.cs" />
     <Compile Include="HeuristiqueFactory.cs" />
     <Compile Include="ExpectiMiniMaxFactory.cs" />
@@ -62,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
