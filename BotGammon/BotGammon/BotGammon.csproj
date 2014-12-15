@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExpectiMiniMaxIterSimple.cs" />
     <Compile Include="HeuristiqueFactory.cs" />
     <Compile Include="ExpectiMiniMaxFactory.cs" />
     <Compile Include="ExpectiMiniMaxSimple.cs" />
