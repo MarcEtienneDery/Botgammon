@@ -17,10 +17,12 @@ namespace BotGammon
             if (heuristique == "HeuristiqueFranklin")
             {
                 h = new HeuristiqueFranklin();
+                Console.WriteLine("Using Frank's Evaluation Function...");
             }
             else if (heuristique == "HeuristiqueSimple")
             {
                 h = new HeuristiqueSimple();
+                Console.WriteLine("Using Simpler Evaluation Function...");
             }
 
             return h;

@@ -16,12 +16,18 @@ namespace BotGammon
             if (algorithm == "ExpectiMiniMaxSimple")
             {
                 algo = new ExpectiMiniMaxSimple();
+                Console.WriteLine("Using ExpectiMiniMax...");
             }
             else if (algorithm == "ExpectiMiniMaxAlphaBeta")
             {
                 algo = new ExpectiMiniMaxAlphaBeta();
+                Console.WriteLine("Using ExpectiMiniMax with alpha-beta pruning...");
             }
-
+            else if (algorithm == "ExpectiMiniMaxIterSimple")
+            {
+                algo = new ExpectiMiniMaxIterSimple();
+                Console.WriteLine("Using Iterative Deepening ExpectiMiniMax...");
+            }
             return algo;
         }
     }
