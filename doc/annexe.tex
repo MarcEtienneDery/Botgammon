@@ -1,0 +1,64 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[top=1.5in, bottom=1.5in, left=1in, right=1in, headsep=0.5in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[frenchb]{babel}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage[final]{pdfpages}
+\usepackage{tabulary}
+
+\usepackage{pifont}
+\newcommand{\cmark}{\ding{51}}
+\newcommand{\xmark}{\ding{55}}
+
+\pagestyle{fancy}
+\rhead{O4L - BotGammon}
+\lhead{INF4230 - Groupe 10}
+
+% pour éviter d'avoir à faire des \noindent partout!
+
+\title{
+\huge{Annexe}\\
+\vfill
+}
+
+\begin{document}
+
+\maketitle
+
+\thispagestyle{empty}
+\clearpage
+
+\openup .5em
+
+\section{Tableau des résultats}
+
+{
+\begin{center}
+    \renewcommand{\arraystretch}{1.6}
+    \begin{tabulary}{1.0\textwidth}{| L || C | C | C | C | C |}
+        \hline
+        \textbf{Fonction d'évaluation} & \textbf{Élagage alpha-bêta} & \textbf{Pourcentage de victoire} & \textbf{Nombre
+    de parties} & \textbf{Profondeur} & \textbf{Temps moyen des coups}\\
+        \hline
+        Aucune & - & 0.5\% & 1000 & - & < 1ms\\
+        Heuristique Franklin & \cmark & 30,0\% & 1000 & 1 & 2ms\\
+        Heuristique Franklin & \xmark & 27,8\% & 1000 & 1 & 2,5ms\\
+        Heuristique Simple & \cmark & 38,8\% & 1000 & 1 & 2ms\\
+        Heuristique Simple & \xmark & 39,1\% & 1000 & 1 & 2ms\\
+        Heuristique Franklin & \cmark & 30,0\% & 10 & 2 & 3,1s\\
+        Heuristique Franklin & \xmark & 0,0\% & 10 & 2 & 1,7s\\
+        Heuristique Simple & \cmark & 40,0\% & 10 & 2 & 1,2s\\
+        Heuristique Simple & \xmark & 0,0\% & 10 & 2 & 2,1s\\
+        Heuristique Simple & \cmark & 30,0\% & 10 & Profondeur itérative & 1s (constant)\\
+        Heuristique Simple & \xmark & 0,0\% & 10 & Profondeur itérative & 1s (constant)\\
+        \hline
+    \end{tabulary}
+\end{center}
+}
+
+\end{document}
