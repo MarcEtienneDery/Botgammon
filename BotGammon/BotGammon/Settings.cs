@@ -9,27 +9,16 @@ namespace BotGammon
     class Settings
     {
         // Gameplay Settings
-        public const int TOTAL_GAMES = 20;
+        public static int TOTAL_GAMES = Properties.Settings.Default.totalGames;
 
         // Artificial Intelligence Settings
-            public const int DEPTH = 1;
-            /* Possible Heuristics:
-             * HeuristiqueSimple
-             * HeuristiqueFranklin
-             * */
-            public const string HEURISTIC = "HeuristiqueSimple";
-
-            /* Possible Algorithms:
-             * ExpectiMiniMaxSimple
-             * ExpectiMiniMaxAlphaBeta
-             * ExpectiMiniMaxIterSimple
-             * ExpectiMiniMaxIterAlphaBeta
-             * */
-            public const string ALGORITHM = "ExpectiMiniMaxIterAlphaBeta";
-            public const int TIME_TO_MOVE = 1000; // miliseconds
+        public static int DEPTH = Properties.Settings.Default.depth;
+        public static string HEURISTIC = Properties.Settings.Default.heuristique;
+        public static string ALGORITHM = Properties.Settings.Default.algoritm;
+        public static int TIME_TO_MOVE = Properties.Settings.Default.timeToMove; // miliseconds
 
         // Statistical Settings
-        public const bool MESURE_MOVE_TIME = false;
+        public static bool MESURE_MOVE_TIME = Properties.Settings.Default.mesureMoveTime;
 
     }
 }

@@ -66,6 +66,7 @@ namespace BotGammon
             process.StandardInput.WriteLine("new game");
 
             Player player = new Player();
+            int test = Properties.Settings.Default.totalGames;
 
             TimeSpan tempsTotal = new TimeSpan();
             double nbCoups = 0.0;
@@ -89,10 +90,9 @@ namespace BotGammon
 
                 Grille grille = new Grille(Rawboard);
 
-                Stopwatch stopWatch;
+                Stopwatch stopWatch = new Stopwatch();
                 if (Settings.MESURE_MOVE_TIME)
                 {
-                    stopWatch = new Stopwatch();
                     stopWatch.Start();
                 }
 
